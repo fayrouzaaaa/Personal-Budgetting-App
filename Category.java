@@ -1,25 +1,49 @@
 public class Category {
-	private int _categoryId;
-	private String _name;
-	private boolean _isDefault;
-	public Budget_Item _unnamed_Budget_Item_16;
-	public Transaction _unnamed_Transaction_17;
-	public Expense _unnamed_Expense_18;
-	public Regular_User _unnamed_Regular_User_;
+    private int categoryId;
+    private String name;
+    private boolean isDefault;
 
-	public void addCategory() {
-		throw new UnsupportedOperationException();
-	}
+    public Category(int categoryId, String name, boolean isDefault) {
+        this.categoryId = categoryId;
+        this.name = name;
+        this.isDefault = isDefault;
+    }
 
-	public void editCategory() {
-		throw new UnsupportedOperationException();
-	}
+    public int getCategoryId() {
+        return categoryId;
+    }
 
-	public void deleteCategory() {
-		throw new UnsupportedOperationException();
-	}
+    public String getName() {
+        return name;
+    }
 
-	public void setCategory() {
-		throw new UnsupportedOperationException();
-	}
+    public boolean isDefault() {
+        return isDefault;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void addCategory() {
+        System.out.println("Category added: " + name);
+    }
+
+    public void editCategory(String newName) {
+        this.name = newName;
+        System.out.println("Category edited to: " + name);
+    }
+
+    public void deleteCategory() {
+        System.out.println("Category deleted: " + name);
+    }
+
+    public void setCategory(String name) {
+        this.name = name;
+    }
+
+    @Override
+    public String toString() {
+        return "Category{id=" + categoryId + ", name='" + name + "', isDefault=" + isDefault + "}";
+    }
 }
