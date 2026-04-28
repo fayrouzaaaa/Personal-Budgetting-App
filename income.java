@@ -1,3 +1,3 @@
-// public class income extends Transaction {
-// 	private String _source;
-// }
+public class income extends Transaction {
+	private String source;
+}

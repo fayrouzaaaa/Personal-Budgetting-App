@@ -1,4 +1,4 @@
-// public class Expense extends Transaction {
-// 	private String _notes;
-// 	public Category _unnamed_Category_10;
-// }
+public class Expense extends Transaction {
+	private String notes;
+	public Category category;
+}
