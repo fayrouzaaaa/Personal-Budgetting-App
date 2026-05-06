@@ -4,6 +4,8 @@ import java.awt.*;
 public class LoginScreen extends JFrame {
     private JTextField emailField;
     private JPasswordField passwordField;
+    private Authentication authentication = new Authentication();
+
     LoginScreen(){
         this.setTitle("Welcome Back!");
         this.setSize(800,800);
@@ -53,8 +55,28 @@ public class LoginScreen extends JFrame {
         signupButton.setBounds(430, 490, 100, 40);
         this.add(signupButton);
 
-        loginButton.addActionListener(e->homeScreen());
+        loginButton.addActionListener(e->validateLogin());
         signupButton.addActionListener(e->signUpScreen());
+    }
+
+    void validateLogin() {
+        if ((emailField.getText()).equals("") || (new String(passwordField.getPassword())).equals("")) {
+            ErrorScreen error = new ErrorScreen();
+            error.addMessage("Some fields are empty", 160, 50, 1, 25);
+            error.addMessage("Please fill out all fields", 195, 120, 0, 20);
+        }
+
+        else if (!(authentication.login(emailField.getText(), new String(passwordField.getPassword())))) {
+            ErrorScreen error = new ErrorScreen();
+            error.addMessage("The email or password are incorrect", 90, 50, 1, 25);
+            error.addMessage("Please try again", 220, 120, 0, 20);
+        }
+
+        else {
+            authentication.login(emailField.getText(), new String(passwordField.getPassword()));
+            this.dispose();
+            DashboardScreen dashboardScreen = new DashboardScreen();
+        }
     }
 
     void signUpScreen(){
@@ -62,10 +84,6 @@ public class LoginScreen extends JFrame {
         SignupScreen signupScreen = new SignupScreen();
     }
 
-    void homeScreen(){
-        this.dispose();
-        DashboardScreen dashboardScreen = new DashboardScreen();
-    }
 }
 
 

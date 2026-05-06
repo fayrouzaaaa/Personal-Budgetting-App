@@ -1,5 +1,6 @@
 import javax.swing.*;
 import java.awt.*;
+import java.util.Arrays;
 
 public class SignupScreen extends JFrame{
 
@@ -7,6 +8,7 @@ public class SignupScreen extends JFrame{
     private JTextField emailField;
     private JPasswordField passwordField;
     private JPasswordField confirmField;
+    private Authentication authentication = new Authentication();
 
     SignupScreen(){
         this.setTitle("Welcome!");
@@ -80,32 +82,26 @@ public class SignupScreen extends JFrame{
     }
 
     public void validateSignUp(){
-        if (!(passwordField.getText()).equals(confirmField.getText())){
+        if ((nameField.getText()).equals("") || (emailField.getText()).equals("") || (new String(passwordField.getPassword())).equals("")){
+            ErrorScreen error = new ErrorScreen();
+            error.addMessage("Some fields are empty", 160, 50, 1, 25);
+            error.addMessage("Please fill out all fields",195,120,0,20);
+        }
 
-            JFrame error = new JFrame ("Error");
-            error.setSize(600,350);
-            error.setLayout(null);
-            error.setLocationRelativeTo(null);
+        else if (authentication.isRegistered(emailField.getText())){
+            ErrorScreen error = new ErrorScreen();
+            error.addMessage("This user already exists", 150, 50, 1, 25);
+            error.addMessage("Please enter another email or log in", 130, 120, 0, 20);
+        }
 
-            JLabel message1 = new JLabel ("The passwords you entered don't match");
-            JLabel message2 = new JLabel("Please try again");
-            message1.setBounds(50, 50, 500, 50);
-            message2.setBounds(220,120, 500, 50);
-            message1.setFont(new Font ("SansSerif", Font.BOLD, 25));
-            message2.setFont(new Font("SansSerif", Font.PLAIN, 20));
-            error.add(message1);
-            error.add(message2);
-            JButton ok = new JButton ("OK");
-            ok.setBounds(250, 200, 90, 30);
-            ok.addActionListener(ev->{
-                error.dispose();
-            });
-            error.add(ok);
-
-            error.setVisible(true);
+        else if (!(passwordField.getText()).equals(confirmField.getText())){
+            ErrorScreen error = new ErrorScreen();
+            error.addMessage("The passwords you entered don't match", 50, 50, 1, 25);
+            error.addMessage("Please try again",220,120,0,20);
         }
 
         else {
+            authentication.register(nameField.getText(), emailField.getText(), new String(passwordField.getPassword()));
             this.dispose();
             DashboardScreen dashboardScreen = new DashboardScreen();
         }

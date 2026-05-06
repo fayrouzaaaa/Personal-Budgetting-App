@@ -5,7 +5,8 @@ import java.util.Scanner;
         public class Main {
             public static void main(String[] args){
 
-                Authentication auth = new Authentication();
+                SignupScreen signupScreen = new SignupScreen();
+                /*Authentication auth = new Authentication();
                 Scanner sc = new Scanner(System.in);
 
                 System.out.println("=== Welcome to Your Personal_Budgetting System ===");
@@ -65,7 +66,7 @@ import java.util.Scanner;
                 }
 
 
-                sc.close();
+                sc.close();*/
             }
         }
 

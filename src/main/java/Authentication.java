@@ -4,18 +4,28 @@ public class Authentication {
     private boolean isLoggedIn = false;
     private String currentUserEmail = null;
 
+    //Check if user is already registered
+    public boolean isRegistered(String email){
+        email = email.trim();
+        String checkSql = "SELECT email FROM Users WHERE Email = ?";
+        String[] params = { email };
+        if (!db.selectQuery(checkSql, params, "Email").isEmpty())
+            return true;
+        return false;
+    }
+
     // Register
     public void register(String name,String email, String password) {
         email = email.trim();
         password = password.trim();
-        // check if user already exists
+       /* // check if user already exists
         String checkSql = "SELECT email FROM Users WHERE Email = ?";
         String[] params = { email };
 
         if (!db.selectQuery(checkSql, params, "Email").isEmpty()) {
             System.out.println("User already exists!");
             return;
-        }
+        }*/
 
         // insert new user
         String insertSql = "INSERT INTO Users (Name, Email, Password) VALUES (?, ?, ?)";
