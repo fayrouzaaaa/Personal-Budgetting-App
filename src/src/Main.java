@@ -1,4 +1,4 @@
-import java.sql.*;
+import java.time.LocalDate;
 import java.util.Scanner;
 
 
@@ -66,6 +66,19 @@ import java.util.Scanner;
 
 
                 sc.close();
+                /* TEST INCOME CLASS
+                income in = new income(1000);
+                Category c = new Category(1 ,"Study" ,true);
+                in.save("fees" , LocalDate.of(2026,5,6), 200 , c);*/
+                String[] p= {};
+               // in.displayTransaction("SELECT * FROM Transactions" , p );
+              /* TEST EXPENSE CLASS
+               Expense e = new Expense(400);
+                Category c2 = new Category(2 ,"Drinks" , true);
+                e.save("Coffee" ,LocalDate.of(2026,5,6) ,100 , c2);
+                e.displayTransaction("SELECT * FROM Transactions WHERE ID > 4" , p );*/
+
             }
+
         }
 
