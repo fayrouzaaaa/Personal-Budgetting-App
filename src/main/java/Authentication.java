@@ -35,6 +35,7 @@ public class Authentication {
         System.out.println("Registered successfully!");
     }
 
+
     // Login
     public boolean  login(String email, String password) {
         email = email.trim();

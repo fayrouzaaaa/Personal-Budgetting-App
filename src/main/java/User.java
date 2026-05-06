@@ -1,9 +1,34 @@
  public class User {
- 	private int _userId;
- 	private String _name;
- 	private String _email;
- 	private String _password;
-	public User _unnamed_User_;
-	//public GUI _unnamed_GUI_40;
- 	public Report _unnamed_Report_41;
+     private int userId;
+     private String name;
+     private String email;
+     private String password;
+
+     public User(int userId, String name, String email, String password) {
+         this.userId = userId;
+         this.name = name;
+         this.email = email;
+         this.password = password;
+     }
+
+     public int getUserId() {
+         return userId;
+     }
+
+     public String getName() {
+         return name;
+     }
+
+     public String getEmail() {
+         return email;
+     }
+
+     public void setName(String name) {
+         this.name = name;
+     }
+
+     public void setEmail(String email) {
+         this.email = email;
+     }
  }
+

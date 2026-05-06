@@ -1,5 +1,15 @@
- public class Account {
- 	private int _accountId;
- 	private double _balance;
- 	public Regular_User _unnamed_Regular_User_46;
- }
+public class Account {
+    private double balance;
+
+    public void deposit(double amount) {
+        balance += amount;
+    }
+
+    public void withdraw(double amount) {
+        balance -= amount;
+    }
+
+    public double getBalance() {
+        return balance;
+    }
+}
