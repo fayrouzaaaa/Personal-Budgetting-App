@@ -1,4 +1,4 @@
- public class Regular_User extends User {
+  public class Regular_User extends User {
  	private Object _currency;
  	private Object _availlableCurrencies;
  	public Goal _unnamed_Goal_43;
@@ -9,8 +9,7 @@
  	public void addTransaction() {
  		throw new UnsupportedOperationException();
  	}
-
  	public void setCurrency() {
- 		throw new UnsupportedOperationException();
- 	}
+	throw new UnsupportedOperationException();
+	}
  }
