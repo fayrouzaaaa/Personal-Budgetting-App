@@ -16,7 +16,7 @@ public class Regular_User extends User {
     }
     public Regular_User(int id, String name, String email, String password) {
         super(id, name, email, password);
-        this.account = new Account();
+        this.account = new Account(id);
     }
 
     //  ADD TRANSACTION
@@ -89,7 +89,8 @@ public class Regular_User extends User {
         return account.getBalance();
     }
 
-
+    //GET CURRENCY
+    public String getCurrency() {return currency;}
 
 //    suggestion:
 //  in dashboard

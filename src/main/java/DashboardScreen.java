@@ -41,13 +41,11 @@ public class DashboardScreen extends JFrame{
 		totalBalance.setForeground(Color.white);
 		summary.add(totalBalance);
 
-		fetch.addAll (db.selectQuery("SELECT BALANCE FROM USERS WHERE ID = ?", new String[] {userID}, "Balance"));
-		JLabel balanceAmount = new JLabel (user.getCurrency()+ " " + fetch.get(0));
+		JLabel balanceAmount = new JLabel (user.getCurrency()+ " " + user.getBalance());
 		balanceAmount.setBounds(20, -70, 400, 300);
 		balanceAmount.setFont(new Font("SansSerif", Font.BOLD, 50));
 		balanceAmount.setForeground(Color.white);
 		summary.add(balanceAmount);
-		fetch.clear();
 
 		JLabel income = new JLabel("Income:");
 		income.setBounds(20, 0, 400, 300);
@@ -201,5 +199,9 @@ public class DashboardScreen extends JFrame{
 			y += 70;
 		}
 		fetch.clear();
+	}
+
+	public void tabs(){
+
 	}
 }

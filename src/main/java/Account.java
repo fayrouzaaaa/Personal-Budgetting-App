@@ -3,7 +3,12 @@ public class Account {
     private double balance;
     private final Database db = new Database();
 
-
+        Account(int userID){
+            String sql = "SELECT BALANCE FROM USERS WHERE ID = ?";
+            String[] params = {String.valueOf(userID)};
+            String balanceValue = (db.selectQuery(sql, params, "Balance")).get(0);
+            balance = Double.valueOf(balanceValue);
+        }
         public void setInitialBalance(int userId, double balance) {
 
             if (balance < 0) {
