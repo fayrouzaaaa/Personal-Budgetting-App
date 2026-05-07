@@ -5,11 +5,13 @@ public class Budget {
     private int budgetId;
     private String month;
     private List<Budget_Item> budgetItems;
+    private Database db;  // non-static instance
 
     public Budget(int budgetId, String month) {
         this.budgetId = budgetId;
         this.month = month;
         this.budgetItems = new ArrayList<>();
+        this.db = new Database();  // initialize database
     }
 
     public int getBudgetId() {
@@ -57,13 +59,6 @@ public class Budget {
         return (item.getSpentAmount() + amount) > item.getLimitAmount();
     }
 
-    public void updateSpentForCategory(Category category, double amount) {
-        Budget_Item item = getBudgetItemByCategory(category);
-        if (item != null) {
-            item.updateSpent(amount);
-        }
-    }
-
     public boolean isCategoryOverLimit(Category category) {
         Budget_Item item = getBudgetItemByCategory(category);
         if (item != null) {
@@ -72,8 +67,23 @@ public class Budget {
         return false;
     }
 
-    @Override
-    public String toString() {
-        return "Budget{id=" + budgetId + ", month='" + month + "', items=" + budgetItems.size() + "}";
+
+    // Database methods (non-static)
+    public void saveToDatabase(int userId) {
+        String budgetSql = "INSERT INTO Budgets (month, user_id) VALUES (?, ?)";
+        String[] budgetParams = { this.month, String.valueOf(userId) };
+        db.updateQuery(budgetSql, budgetParams);
+        System.out.println("Budget saved: " + this.month);
+    }
+
+    public void updateSpentInDatabase(int categoryId, double amount) {
+        String sql = "UPDATE Budget_Items SET spent_amount = spent_amount + ? WHERE budget_id = ? AND category_id = ?";
+        String[] params = {
+                String.valueOf(amount),
+                String.valueOf(this.budgetId),
+                String.valueOf(categoryId)
+        };
+        db.updateQuery(sql, params);
+        System.out.println("Spent updated: +" + amount);
     }
 }
