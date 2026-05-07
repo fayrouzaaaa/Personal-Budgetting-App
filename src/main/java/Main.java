@@ -1,8 +1,11 @@
+import java.time.LocalDate;
+
 public class Main {
     public static void main(String[] args) {
 
+        //SignupScreen s = new SignupScreen();
         // 1) create user
-        Regular_User user = new Regular_User(
+     /*  Regular_User user = new Regular_User(
                 1,
                 "Hager",
                 "hager@gmail.com",
@@ -39,5 +42,8 @@ public class Main {
 
         // 6) change currency
         user.setCurrency("USD");
+*/
+Expense e = new Expense(200);
+e.getTransactions(LocalDate.now(), LocalDate.now());
     }
 }
