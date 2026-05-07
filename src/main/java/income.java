@@ -3,23 +3,32 @@ import java.util.ArrayList;
 
 public class income extends Transaction {
     private String source;
-    private double balance;
-    income(double b){
+
+
+    public  income(double b){
         this.balance = b;
     }
-    @Override
-    public void save(String Name, LocalDate Date, double aAmount, Category aCategory) {
-        this.balance -= aAmount;
-        String sql ="INSERT INTO Transactions VALUES (? , ?, ?, ? ,?, ?) ";
-        String[] p = {Name , Double.toString(aAmount) , Integer.toString(2) /*replace this with user-id*/, "income" , Date.toString() , aCategory.getName()};
-        db.updateQuery(sql , p);
 
+    public void save(int userID ,String Name, String source,LocalDate Date, double aAmount) {
+        this.balance += aAmount;
+        this.account = new Account(userID);
+        account.deposit(userID , aAmount);
+        this.source = source;
+        String sql ="INSERT INTO Transactions(Name, Amount , User_ID ,Type , Date , Category) VALUES (? , ?, ?, ? ,?, ?) ";
+        String[] p = {Name , Double.toString(aAmount) , Integer.toString(userID), "income" , Date.toString() ,source };
+        db.updateQuery(sql , p);
     }
     @Override
-    public void getTransactions(LocalDate aStart, LocalDate aEnd)
+    public void getTransactionByCategory(Category category){
+        String sql = "SELECT * FROM Transactions WHERE Category = ? and Type = ?";
+        String[] p = {category.getName() , "Income"};
+        displayTransaction(sql , p);
+    }
+    @Override
+    public void getTransactionByDate(int userID ,LocalDate aStart, LocalDate aEnd)
     {
-        String sql = "SELECT * FROM Transactions , Users WHERE Date BETWEEN ? AND ? AND Users.ID = Transactions.User_ID AND Type = ?"; // SQL query
-        String[] p ={ aStart.toString() , aEnd.toString() , "income"}; // convert dates to string
+        String sql = "SELECT * FROM Transactions  WHERE Date BETWEEN ? AND ? AND User_ID = ? AND Type = ?"; // SQL query
+        String[] p ={ aStart.toString() , aEnd.toString(),Integer.toString(userID) , "income"}; // convert dates to string
         displayTransaction(sql , p);
     }
     @Override
@@ -35,4 +44,5 @@ public class income extends Transaction {
             System.out.printf("%-15s %-25s %-20s %-20s %-20s %-20s%n",IDResults.get(i),NameResults.get(i),AmountResults.get(i),"Income",DateResults.get(i),CategoryResults.get(i));
         }
     }
+
 }
