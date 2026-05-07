@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 public class DashboardScreen extends JFrame{
 	private Database db = new Database();
+	private Footer footer = new Footer(this);
 	private String a[] ={};
 	private Regular_User user;
 	private String userID;
@@ -25,6 +26,7 @@ public class DashboardScreen extends JFrame{
 
 		showSummary();
 		showRecentTransactions();
+		this.add(footer);
 		this.setVisible(true);
 	}
 
@@ -151,7 +153,7 @@ public class DashboardScreen extends JFrame{
 			name.setBounds(100, y, 400,300);
 			name.setFont(new Font("SansSerif", Font.BOLD, 20));
 			this.add(name);
-			y += 70;
+			y += 60;
 		}
 		fetch.clear();
 
@@ -162,7 +164,7 @@ public class DashboardScreen extends JFrame{
 			category.setBounds(100, y, 400,300);
 			category.setFont(new Font("SansSerif", Font.PLAIN, 15));
 			this.add(category);
-			y += 70;
+			y += 60;
 		}
 		fetch.clear();
 
@@ -173,7 +175,7 @@ public class DashboardScreen extends JFrame{
 			date.setBounds(220, y, 400,300);
 			date.setFont(new Font("SansSerif", Font.PLAIN, 15));
 			this.add(date);
-			y += 70;
+			y += 60;
 		}
 		fetch.clear();
 		ArrayList<String> type = db.selectQuery("select Type from Transactions where User_ID=? order by Date desc", new String[] {userID}, "Type");
@@ -196,7 +198,7 @@ public class DashboardScreen extends JFrame{
 			amount.setFont(new Font("SansSerif", Font.BOLD, 20));
 			amount.setForeground(color);
 			this.add(amount);
-			y += 70;
+			y += 60;
 		}
 		fetch.clear();
 	}
