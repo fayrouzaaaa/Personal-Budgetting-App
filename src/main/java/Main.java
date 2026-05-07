@@ -1,49 +1,36 @@
-import java.time.LocalDate;
-
 public class Main {
     public static void main(String[] args) {
 
-        //SignupScreen s = new SignupScreen();
-        // 1) create user
-     /*  Regular_User user = new Regular_User(
+        //  create user
+        Regular_User user = new Regular_User(
                 1,
                 "Hager",
                 "hager@gmail.com",
                 "1234"
         );
+//        user.setInitialBalance(100);
+        Account account = new Account();
 
-        // 2) create categories
-        Category food = new Category(1, "Food", false);
-        Category salary = new Category(2, "Salary", true);
+        //  set initial balance
+        account.setInitialBalance(1, 5000);
 
-        // test category methods (optional)
-        food.addCategory();
-        food.editCategory("Food & Drinks");
-        food.deleteCategory();
+        // check balance
+        System.out.println("Current Balance = "
+                + account.getBalance());
 
-        // 3) income transaction
-        user.addTransaction(
-                Regular_User.TransactionType.INCOME,
-                "Monthly Salary",
-                5000,
-                salary
-        );
+        //  deposit
+        account.deposit(1, 2000);
 
-        // 4) expense transaction
-        user.addTransaction(
-                Regular_User.TransactionType.EXPENSE,
-                "Lunch",
-                200,
-                food
-        );
+        System.out.println("After Deposit = "
+                + account.getBalance());
 
-        // 5) check balance
-        System.out.println("Balance = " + user.getBalance());
+        // withdraw
+        account.withdraw(1, 1000);
 
-        // 6) change currency
-        user.setCurrency("USD");
-*/
-Expense e = new Expense(200);
-e.getTransactions(LocalDate.now(), LocalDate.now());
+        System.out.println("After Withdraw = "
+                + account.getBalance());
     }
-}
+
+
+    }
+
