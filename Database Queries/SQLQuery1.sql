@@ -52,3 +52,4 @@ Category varchar(100)
 
 ALTER table Transactions
 ADD CONSTRAINT FK_1 FOREIGN KEY (User_ID) references Users (ID)
+ALTER TABLE Transactions ADD Notes VARCHAR(500)
