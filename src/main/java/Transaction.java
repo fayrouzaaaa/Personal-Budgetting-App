@@ -1,7 +1,6 @@
-import java.util.Date;
 import java.util.*;
 import java.time.*;
-public abstract  class Transaction {
+public class Transaction {
     private int transactionId ;
     private double amount ;
     private LocalDate date ;
@@ -12,7 +11,7 @@ public abstract  class Transaction {
     public Category category;
 
 
-    public abstract void save(String Name , LocalDate Date ,double aAmount, Category aCategory);
+    public void save(String Name , LocalDate Date ,double aAmount, Category aCategory){};
 
 
     public void getTransactions(LocalDate aStart, LocalDate aEnd)
@@ -23,16 +22,16 @@ public abstract  class Transaction {
 
     }
     public void displayTransaction(String sql ,String[] p){
-        ArrayList<String> IDResults =db.selectQuery(sql , p , "ID"); // the array list contain all transactions ID that retrieved from the SQL query
+        ArrayList<String> IDResults =db.selectQuery(sql , p , "ID"); // the array list contains all transactions ID that retrieved from the SQL query
         ArrayList<String> NameResults =db.selectQuery(sql , p , "Name");
         ArrayList<String> AmountResults =db.selectQuery(sql , p , "Amount");
         ArrayList<String> TypeResults =db.selectQuery(sql , p , "Type");
-        ArrayList<String>  DateResults=db.selectQuery(sql , p , "Date"); // the array list contain all transactions that retrieved from the SQL query
-        ArrayList<String> CategoryResults =db.selectQuery(sql , p , "Category"); // the array list contain all transactions that retrieved from the SQL query
+        ArrayList<String>  DateResults=db.selectQuery(sql , p , "Date");
+        ArrayList<String> CategoryResults =db.selectQuery(sql , p , "Category");
 
-        System.out.println("Transaction ID\tTransaction Name\tTransaction Amount\tTransaction Type\tTransaction Date\tCategory");
+        System.out.printf("%-15s %-25s %-20s %-20s %-20s %-20s%n","Transaction ID","Transaction Name","Transaction Amount","Transaction Type","Transaction Date","Category");
         for(int i = 0 ; i < IDResults.size(); i++){
-            System.out.println(IDResults.get(i)+"\t\t\t\t\t"+NameResults.get(i)+ "\t\t\t\t"+AmountResults.get(i)+"\t\t\t"+TypeResults.get(i)+"\t\t\t"+DateResults.get(i)+"\t\t\t"+CategoryResults.get(i));
+            System.out.printf("%-15s %-25s %-20s %-20s %-20s %-20s%n",IDResults.get(i),NameResults.get(i),AmountResults.get(i),TypeResults.get(i),DateResults.get(i),CategoryResults.get(i));
         }
     }
 }

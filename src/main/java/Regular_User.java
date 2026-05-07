@@ -44,7 +44,7 @@ public class Regular_User extends User {
 
         if (type == TransactionType.INCOME) {
             t = new income(amount);
-            account.deposit(amount);
+            account.deposit(getUserId(), amount);
         }
         else
         {
@@ -53,7 +53,7 @@ public class Regular_User extends User {
                 return;
             }
             t = new Expense(amount);
-            account.withdraw(amount);
+            account.withdraw(getUserId(), amount);
         }
 
 
@@ -78,6 +78,9 @@ public class Regular_User extends User {
         } else {
             System.out.println(" Currency not supported");
         }
+    }
+    public void setInitialBalance(double amount) {
+        account.setInitialBalance(getUserId(), amount);
     }
 
 
