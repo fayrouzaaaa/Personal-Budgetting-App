@@ -1,7 +1,8 @@
 public class Main {
     public static void main(String[] args) {
 
-        // 1) create user
+        SignupScreen signupScreen = new SignupScreen();
+        /* 1) create user
         Regular_User user = new Regular_User(
                 1,
                 "Hager",
@@ -38,6 +39,6 @@ public class Main {
         System.out.println("Balance = " + user.getBalance());
 
         // 6) change currency
-        user.setCurrency("USD");
+        user.setCurrency("USD");*/
     }
 }
