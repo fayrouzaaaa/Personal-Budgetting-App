@@ -11,6 +11,7 @@ public class Transaction {
 
 
     public void save(int userId ,String Name , LocalDate Date ,double aAmount){};
+
     public void getTransactionByCategory(Category category){
         String sql = "SELECT * FROM Transactions WHERE Category = ?";
         String[] p = {category.getName()};
@@ -31,15 +32,14 @@ public class Transaction {
         ArrayList<String> TypeResults =db.selectQuery(sql , p , "Type");
         ArrayList<String>  DateResults=db.selectQuery(sql , p , "Date");
         ArrayList<String> CategoryResults =db.selectQuery(sql , p , "Category");
-        ArrayList<String>  NoteResults = db.selectQuery(sql , p , "Notes");
 
         if(IDResults.isEmpty()){
             System.out.println("No Transactions");
         }
         else {
-            System.out.printf("%-15s %-25s %-20s %-20s %-20s %-20s %10s%n", "Transaction ID", "Transaction Name", "Transaction Amount", "Transaction Type", "Transaction Date", "Category", "Notes");
+            System.out.printf("%-15s %-25s %-20s %-20s %-20s %-20s%n", "Transaction ID", "Transaction Name", "Transaction Amount", "Transaction Type", "Transaction Date", "Category");
             for (int i = 0; i < IDResults.size(); i++) {
-                System.out.printf("%-15s %-25s %-20s %-20s %-20s %-20s %-10s%n", IDResults.get(i), NameResults.get(i), AmountResults.get(i), TypeResults.get(i), DateResults.get(i), CategoryResults.get(i), NoteResults.get(i));
+                System.out.printf("%-15s %-25s %-20s %-20s %-20s %-20s%n", IDResults.get(i), NameResults.get(i), AmountResults.get(i), TypeResults.get(i), DateResults.get(i), CategoryResults.get(i));
             }
         }
     }
