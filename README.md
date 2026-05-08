@@ -1,4 +1,3 @@
-[README.md](https://github.com/user-attachments/files/27539893/README.md)
 
 # **Personal Budgeting App**
 
