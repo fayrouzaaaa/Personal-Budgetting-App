@@ -1,7 +1,8 @@
 public class Main {
     public static void main(String[] args) {
 
-        SignupScreen signupScreen = new SignupScreen();
+
+       SignupScreen signupScreen = new SignupScreen();
 //        //  create user
 //        Regular_User user = new Regular_User(
 //                1,
