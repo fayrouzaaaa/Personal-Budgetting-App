@@ -46,7 +46,12 @@ public class Footer extends JPanel {
         }
     }
     public void goalTab(){}
-    public void reportTab(){}
+    public void reportTab(){
+        if (! (current instanceof ReportScreen)){
+            current.dispose();
+            ReportScreen reportScreen = new ReportScreen(user);
+        }
+    }
     public void logoutTab(){
         current.dispose();
         SignupScreen signupScreen = new SignupScreen();

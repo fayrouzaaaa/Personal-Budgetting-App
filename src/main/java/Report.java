@@ -12,19 +12,19 @@ public class Report {
 		 Account account = new Account(userID);
          return account.getBalance();
 	 }
-	 public double getTotalIncome(int userID , LocalDate startDate , LocalDate endDate){
+	 public String getTotalIncome(int userID , LocalDate startDate , LocalDate endDate){
 		 String sqlForTotalIncome = "SELECT SUM(Amount) AS TotalIncome FROM Transactions WHERE Type = ? AND User_ID=? AND Date BETWEEN ? and ?";
 		 String[] pForTotalIncome = {"Income" , Integer.toString(userID) , startDate.toString() , endDate.toString()};
 		 ArrayList<String> TotalIncome =db.selectQuery(sqlForTotalIncome , pForTotalIncome, "TotalIncome");
-		 return Double.parseDouble(TotalIncome.getFirst());
+		 return TotalIncome.getFirst();
 	 }
-	 public double getTotalExpenses(int userID , LocalDate startDate , LocalDate endDate){
+	 public String getTotalExpenses(int userID , LocalDate startDate , LocalDate endDate){
 		 String sqlForTotalExpense= "SELECT SUM(Amount) AS TotalExpense FROM Transactions WHERE Type =? AND User_ID=? AND Date BETWEEN ? and ?";
 		 String[] pForTotalExpense = {"Expense" , Integer.toString(userID) , startDate.toString() , endDate.toString()};
 		 ArrayList<String> TotalExpense =db.selectQuery(sqlForTotalExpense ,pForTotalExpense , "TotalExpense");
-		 return Double.parseDouble(TotalExpense.getFirst());
+		 return TotalExpense.getFirst();
 	 }
- 	public void generateReport(String m , int userID) {
+ 	public ArrayList<String> generateReport(String m , int userID) {
 		 int month;
 		 if(m.length() <= 2){ //if user inputs a number instead of the name of the month
              month= Integer.parseInt(m);
@@ -38,22 +38,35 @@ public class Report {
 		 t.getTransactionByDate(userID,startDate , endDate); //display transactions
 
 		//get current balance
-		double balance = getBalance(userID);
+		String balance = String.valueOf(getBalance(userID));
 		//calculate total income
-		 double totalIncome = getTotalIncome(userID , startDate , endDate);
+		 String totalIncome = getTotalIncome(userID , startDate , endDate);
         //calculate expense amounts
-		double totalExpense = getTotalExpenses(userID , startDate , endDate);
+		String totalExpense = getTotalExpenses(userID , startDate , endDate);
 
+		double savings = Double.valueOf(totalIncome)-Double.valueOf(totalExpense);
+		String savingAmount;
+		if (savings>=0)
+			savingAmount = String.valueOf(savings);
+		else
+			savingAmount = "0.0";
 		System.out.println("your Balance: "+ balance);
 		System.out.println("Total income this month: " + totalIncome);
 		System.out.println("Total Expense in this month: "+totalExpense);
-		System.out.println("Saving amounts: " + (totalIncome > totalExpense ? totalIncome-totalExpense : 0));
+		System.out.println("Saving amounts: " + (Double.valueOf(totalIncome) > Double.valueOf(totalExpense) ? savings : 0));
+
+		ArrayList<String> returnArray = new ArrayList<>();
+		returnArray.add(balance);
+		returnArray.add(totalIncome);
+		returnArray.add(totalExpense);
+		returnArray.add(savingAmount);
+		return returnArray;
 
  	}
 
  	public void generateCharts(int userID , LocalDate startDate , LocalDate endDate) {
  		double balance = getBalance(userID);
-		 double totalIncome = getTotalIncome(userID , startDate , endDate);
-		 double totalExpense = getTotalExpenses(userID , startDate, endDate);
+		 String totalIncome = getTotalIncome(userID , startDate , endDate);
+		 String totalExpense = getTotalExpenses(userID , startDate, endDate);
  	}
  }
