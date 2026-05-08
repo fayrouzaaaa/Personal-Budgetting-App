@@ -40,7 +40,7 @@ public class DashboardScreen extends JFrame{
 		this.add(footer);
 
 		showSummary();
-		//showRecentTransactions();
+		showRecentTransactions();
 		this.setVisible(true);
 	}
 
