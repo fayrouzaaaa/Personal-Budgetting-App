@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 public class DashboardScreen extends JFrame{
 	private Database db = new Database();
-	private Footer footer = new Footer(this);
+	private Footer footer;
 	private String a[] ={};
 	private Regular_User user;
 	private String userID;
@@ -24,9 +24,11 @@ public class DashboardScreen extends JFrame{
 		hello.setFont(new Font("SansSerif", Font.BOLD, 30));
 		this.add(hello);
 
+		footer = new Footer (this, user);
+		this.add(footer);
+
 		showSummary();
 		showRecentTransactions();
-		this.add(footer);
 		this.setVisible(true);
 	}
 
@@ -189,7 +191,6 @@ public class DashboardScreen extends JFrame{
 				symbol = "+ ";
 			}
 			else {
-				System.out.println(type.get(i));
 				color = new Color(0xC23636);
 				symbol = "- ";
 			}

@@ -2,8 +2,10 @@ import javax.swing.*;
 
 public class Footer extends JPanel {
     private JFrame current;
-    Footer(JFrame currentFrame){
+    private Regular_User user;
+    Footer(JFrame currentFrame, Regular_User user){
         this.current = currentFrame;
+        this.user = user;
         this.setBounds(-40, 720, 800, 100);
 
         JButton homeButton = new JButton("Home");
@@ -33,14 +35,14 @@ public class Footer extends JPanel {
     public void homeTab(){
         if (!(current instanceof DashboardScreen)){
             current.dispose();
-            //DashboardScreen dashboardScreen = new DashboardScreen();
+            DashboardScreen dashboardScreen = new DashboardScreen(user);
         }
     }
     public void transactionsTab(){}
     public void budgetTab(){
         if (!(current instanceof BudgetScreen)){
             current.dispose();
-            BudgetScreen budgetScreen = new BudgetScreen();
+            BudgetScreen budgetScreen = new BudgetScreen(user);
         }
     }
     public void goalTab(){}
