@@ -1,5 +1,4 @@
 import javax.swing.*;
-import javax.xml.crypto.Data;
 import java.awt.*;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -34,6 +33,9 @@ public class BudgetScreen extends JFrame {
                      "where Budgets.user_id = ? and Budgets.budget_id = Budget_Items.budget_id";
         fetch.addAll(db.selectQuery(sql, new String[] {userID}, "SUM"));
 
+        if (fetch.get(0)==null){
+            fetch.set(0, "0.0");
+        }
         totalBudget = fetch.get(0);
 
         fetch.clear();
@@ -43,7 +45,12 @@ public class BudgetScreen extends JFrame {
 
         fetch.addAll(db.selectQuery(sql, new String[] {userID}, "SUM"));
 
+        if (fetch.get(0)==null){
+            fetch.set(0, "0.0");
+        }
         totalSpent = fetch.get(0);
+
+        fetch.clear();
 
         showBudgetSummary();
 
@@ -89,8 +96,12 @@ public class BudgetScreen extends JFrame {
         budgetPanel.add(remain);
 
         JProgressBar progress = new JProgressBar();
-        int progressValue = ((int)totalSpentNum*100)/(int)totalBudgetNum;
-        progress.setValue(progressValue);
+        if ((int)totalBudgetNum!=0) {
+            int progressValue = ((int) totalSpentNum * 100) / (int) totalBudgetNum;
+            progress.setValue(progressValue);
+        }
+        else
+            progress.setValue(0);
         progress.setBounds(20, 140, 500, 30);
         budgetPanel.add(progress);
 

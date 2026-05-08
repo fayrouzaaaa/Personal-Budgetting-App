@@ -58,6 +58,9 @@ public class DashboardScreen extends JFrame{
 		summary.add(income);
 
 		fetch.addAll(db.selectQuery("Select SUM(Amount) as Sum From Transactions where Type='Income' And User_ID=?", new String[] {userID}, "Sum"));
+		if (fetch.get(0)==null){
+			fetch.set(0,"0.0");
+		}
 		JLabel incomeAmount = new JLabel(user.getCurrency() + " " + fetch.get(0));
 		incomeAmount.setBounds(20, 20, 400, 300);
 		incomeAmount.setFont(new Font("SansSerif", Font.BOLD, 20));
@@ -72,6 +75,9 @@ public class DashboardScreen extends JFrame{
 		summary.add(expense);
 
 		fetch.addAll(db.selectQuery("Select SUM(Amount) as Sum From Transactions where Type='Expense' And User_ID= ?", new String[] {userID}, "Sum"));
+		if (fetch.get(0)==null){
+			fetch.set(0,"0.0");
+		}
 		JLabel expenseAmount = new JLabel(user.getCurrency() + " " + fetch.get(0));
 		expenseAmount.setBounds(400, 20, 400, 300);
 		expenseAmount.setFont(new Font("SansSerif", Font.BOLD, 20));
