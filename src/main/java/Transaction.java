@@ -86,5 +86,10 @@ public class Transaction {
         }
     }
 
-
+    public ArrayList<String> getTransactionsType(int userID){
+        String sql = "SELECT DISTINCT Type FROM Transactions WHERE User_ID = ?";
+        String[] p = {};
+        ArrayList<String> result = db.selectQuery(sql , p , "Type");
+        return result;
+    }
 }
