@@ -110,7 +110,7 @@ public class BudgetScreen extends JFrame {
     public void showBudgetItems(){
         JPanel itemsPanel = new JPanel();
         itemsPanel.setLayout(null);
-        itemsPanel.setPreferredSize(new Dimension(530, 340));
+        itemsPanel.setPreferredSize(new Dimension(530, 350));
 
         String sql = "select Categories.name as Name from Categories, Budget_Items,Budgets " +
                 "where Budgets.user_id=? AND Budgets.budget_id=Budget_Items.budget_id AND " +
@@ -160,5 +160,10 @@ public class BudgetScreen extends JFrame {
         addBudgetButton.setFont(new Font("SansSerif", Font.BOLD, 20));
         addBudgetButton.setBounds(500, 650, 200, 50);
         this.add(addBudgetButton);
+        addBudgetButton.addActionListener(e->addBudget());
+    }
+
+    public void addBudget(){
+        AddBudgetScreen addBudgetScreen = new AddBudgetScreen(user);
     }
 }

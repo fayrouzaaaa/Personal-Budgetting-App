@@ -6,6 +6,7 @@ public class ErrorScreen extends JFrame{
     ErrorScreen(){
         this.setTitle("Error");
         this.setSize(600,350);
+        this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         this.setLayout(null);
         this.setLocationRelativeTo(null);
 
