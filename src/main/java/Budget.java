@@ -5,21 +5,26 @@ public class Budget {
     private int budgetId;
     private String month;
     private List<Budget_Item> budgetItems;
-    private Database db;  // non-static instance
+    private Database db= new Database();  // non-static instance
 
-    public Budget(int budgetId, String month) {
+    public Budget(int budgetId, String month , int userID) {
         this.budgetId = budgetId;
         this.month = month;
         this.budgetItems = new ArrayList<>();
-        this.db = new Database();  // initialize database
     }
 
-    public int getBudgetId() {
-        return budgetId;
+    public int getBudgetId(int userID) {
+        String sql = "SELECT budget_id FROM Budgets WHERE user_id = ?";
+        String[] p = {Integer.toString(userID)};
+        ArrayList<String> result = db.selectQuery(sql , p , "budget_id");
+        return Integer.parseInt(result.getFirst());
     }
 
-    public String getMonth() {
-        return month;
+    public String getMonth(int userID , int budgetID) {
+        String sql = "SELECT month FROM Budgets WHERE user_id = ? AND budget_id = ?";
+        String[] p = {Integer.toString(userID), Integer.toString(budgetID)};
+        ArrayList<String> result = db.selectQuery(sql , p , "month");
+        return result.getFirst();
     }
 
     public List<Budget_Item> getBudgetItems() {

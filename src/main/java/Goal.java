@@ -6,16 +6,16 @@ public class Goal {
     private double currentAmount;
     private String name;
     private Category category;
-    private Database db;
+    private Database db = new Database();
 
     public Goal(int goalId, String name, double targetAmount) {
         this(goalId, name, targetAmount, 0.0, null);
-        this.db = new Database();
+
     }
 
     public Goal(int goalId, String name, double targetAmount, Category category) {
         this(goalId, name, targetAmount, 0.0, category);
-        this.db = new Database();
+
     }
 
     public Goal(int goalId, String name, double targetAmount, double currentAmount, Category category) {
@@ -24,27 +24,46 @@ public class Goal {
         this.targetAmount = targetAmount;
         this.currentAmount = currentAmount;
         this.category = category;
-        this.db = new Database();
     }
 
-    public int getGoalId() {
-        return goalId;
+
+    public int getGoalId(int userID , int categoryID) {
+        String sql = "SELECT goal_id FROM Goals WHERE user_id = ? AND category_id = ?";
+        String[] p = {Integer.toString(userID) , Integer.toString(categoryID)};
+        ArrayList<String> result =db.selectQuery(sql , p , "goal_id");
+        return  Integer.parseInt(result.getFirst());
     }
 
-    public double getTargetAmount() {
-        return targetAmount;
+    public double getTargetAmount(int goalID) {
+        String sql = "SELECT target_amount FROM Goals WHERE goal_id =?";
+        String[] p = {Integer.toString(goalID)};
+        ArrayList<String> result =db.selectQuery(sql , p , "target_amount");
+        return Double.parseDouble(result.getFirst());
     }
 
-    public double getCurrentAmount() {
-        return currentAmount;
+    public double getCurrentAmount(int goalId) {
+        String sql = "SELECT current_amount FROM Goals WHERE goal_id = ?";
+        String[] p = {Integer.toString(goalId)};
+        ArrayList<String> result =db.selectQuery(sql , p , "current_amount");
+        return Double.parseDouble(result.getFirst());
     }
 
-    public String getName() {
-        return name;
+    public String getName(int goalID) {
+        String sql = "SELECT current_amount FROM Goals WHERE goal_id = ?";
+        String[] p = {Integer.toString(goalId)};
+        ArrayList<String> result =db.selectQuery(sql , p , "name");
+        return result.getFirst();
     }
 
-    public Category getCategory() {
-        return category;
+    public String getCategory(int goalID) {
+        String sql = "SELECT category_id FROM Goals WHERE goal_id = ?";
+        String[] p = {Integer.toString(goalId)};
+        ArrayList<String> temp =db.selectQuery(sql , p , "category_id");
+         sql = "SELECT name FROM Categories WHERE category_id = ?";
+         String[] p2 = {temp.getFirst()};
+         ArrayList<String> result = db.selectQuery(sql , p2 ,name);
+
+        return result.getFirst();
     }
 
     public void setName(String name) {
@@ -52,6 +71,7 @@ public class Goal {
     }
 
     public void setTargetAmount(double targetAmount) {
+
         this.targetAmount = targetAmount;
     }
 
