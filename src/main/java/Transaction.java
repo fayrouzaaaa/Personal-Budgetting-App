@@ -34,7 +34,7 @@ public class Transaction {
         ArrayList<String> CategoryResults =db.selectQuery(sql , p , "Category");
 
         if(IDResults.isEmpty()){
-            System.out.println("No Transactions");
+            System.out.println("No Transactions!");
         }
         else {
             System.out.printf("%-15s %-25s %-20s %-20s %-20s %-20s%n", "Transaction ID", "Transaction Name", "Transaction Amount", "Transaction Type", "Transaction Date", "Category");
@@ -42,6 +42,11 @@ public class Transaction {
                 System.out.printf("%-15s %-25s %-20s %-20s %-20s %-20s%n", IDResults.get(i), NameResults.get(i), AmountResults.get(i), TypeResults.get(i), DateResults.get(i), CategoryResults.get(i));
             }
         }
+    }
+    public void showTransaction(int userID){
+        String sql = "SELECT * FROM Transactions WHERE User_ID = ?";
+        String[] p = {Integer.toString(userID)};
+        displayTransaction(sql , p);
     }
     public  void displayRecentTransactions(int userID){ // use it in transaction page
         String sqlForLatestTransactions = "select distinct Date from Transactions where User_ID = ? order by Date desc";
