@@ -1,33 +1,37 @@
+/**
+ * Handles user identity management, including registration, login, and session state.
+ * * <p>The Authentication class interacts with the {@link Database} to verify user
+ * credentials and persist new user records. It maintains a simple session state
+ * using a login flag and the current user's email.</p>
+ */
 public class Authentication {
 
     private Database db = new Database();
     private boolean isLoggedIn = false;
     private String currentUserEmail = null;
 
-    //Check if user is already registered
+    /**
+     * Checks if a user email is already present in the database.
+     * * @param email The email address to check.
+     * @return {@code true} if the email exists in the Users table; {@code false} otherwise.
+     */
     public boolean isRegistered(String email){
         email = email.trim();
         String checkSql = "SELECT email FROM Users WHERE Email = ?";
         String[] params = { email };
-        if (!db.selectQuery(checkSql, params, "Email").isEmpty())
-            return true;
-        return false;
+        return !db.selectQuery(checkSql, params, "Email").isEmpty();
     }
 
-    // Register
-    public void register(String name,String email, String password) {
+    /**
+     * Registers a new user by inserting their details into the database.
+     * * @param name     The full name of the user.
+     * @param email    The email address to be used for account identification.
+     * @param password The plain-text password for the account.
+     */
+    public void register(String name, String email, String password) {
         email = email.trim();
         password = password.trim();
-       /* // check if user already exists
-        String checkSql = "SELECT email FROM Users WHERE Email = ?";
-        String[] params = { email };
 
-        if (!db.selectQuery(checkSql, params, "Email").isEmpty()) {
-            System.out.println("User already exists!");
-            return;
-        }*/
-
-        // insert new user
         String insertSql = "INSERT INTO Users (Name, Email, Password) VALUES (?, ?, ?)";
         String[] insertParams = { name, email, password };
         db.updateQuery(insertSql, insertParams);
@@ -35,9 +39,15 @@ public class Authentication {
         System.out.println("Registered successfully!");
     }
 
-
-    // Login
-    public boolean  login(String email, String password) {
+    /**
+     * Authenticates a user based on email and password.
+     * * <p>If successful, sets the {@code isLoggedIn} flag to true and stores
+     * the current user's email in the session.</p>
+     * * @param email    The email address entered by the user.
+     * @param password The password entered by the user.
+     * @return {@code true} if credentials match a database record; {@code false} otherwise.
+     */
+    public boolean login(String email, String password) {
         email = email.trim();
         password = password.trim();
 
@@ -55,9 +65,11 @@ public class Authentication {
         }
     }
 
-    //  Logout
+    /**
+     * Terminates the current user session.
+     * Clears session flags and resets the {@code currentUserEmail} to null.
+     */
     public void logout() {
-
         if (isLoggedIn) {
             isLoggedIn = false;
             currentUserEmail = null;

@@ -3,6 +3,14 @@ import java.awt.*;
 import java.util.ArrayList;
 import java.util.Arrays;
 
+/**
+ * Provides the graphical user interface for new user registration.
+ * * <p>The SignupScreen class facilitates account creation by collecting user details
+ * such as name, email, and password. It performs multi-step validation to ensure
+ * data integrity, prevents duplicate registrations via the {@link Authentication}
+ * service, and transitions the user to the {@link DashboardScreen} upon success.</p>
+
+ */
 public class SignupScreen extends JFrame{
 
     private JTextField nameField;
@@ -12,6 +20,11 @@ public class SignupScreen extends JFrame{
     private User user = new User();
     private Authentication authentication = new Authentication();
 
+    /**
+     * Constructs the SignupScreen frame.
+     * Sets window properties, centers the frame, and initializes the
+     * registration form layout.
+     */
     SignupScreen(){
         this.setTitle("Welcome!");
         setSize(800, 800);
@@ -29,6 +42,11 @@ public class SignupScreen extends JFrame{
         this.setVisible(true);
     }
 
+    /**
+     * Initializes and positions the GUI components for the signup form.
+     * <p>Includes text fields for user information, labels, a submission button,
+     * and a redirection button for users who already possess an account.</p>
+     */
     public void signUpGUI(){
         JLabel enterName = new JLabel("Enter Name");
         enterName.setBounds(165, 50, 500, 300);
@@ -79,15 +97,27 @@ public class SignupScreen extends JFrame{
         loginButton.setBounds(430, 610, 100, 40);
         this.add(loginButton);
 
+        // Action Listeners
         signupButton.addActionListener(e->validateSignUp());
         loginButton.addActionListener(e->loginScreen());
     }
 
+    /**
+     * Validates the registration input and processes the signup.
+     * * <p>Validation criteria include:
+     * <ul>
+     * <li>All mandatory fields (Name, Email, Password) must be filled.</li>
+     * <li>The email must not already be associated with an existing account.</li>
+     * <li>The "Password" and "Confirm Password" fields must match exactly.</li>
+     * </ul>
+     * On successful validation, the user is registered in the database,
+     * a {@link Regular_User} session is created, and the dashboard is launched.</p>
+     */
     public void validateSignUp(){
         if ((nameField.getText()).equals("") || (emailField.getText()).equals("") || (new String(passwordField.getPassword())).equals("")){
             ErrorScreen error = new ErrorScreen();
             error.addMessage("Some fields are empty", 160, 50, 1, 25);
-            error.addMessage("Please fill out all fields",195,120,0,20);
+            error.addMessage("Please fill out all fields", 195, 120, 0, 20);
         }
 
         else if (authentication.isRegistered(emailField.getText())){
@@ -96,14 +126,17 @@ public class SignupScreen extends JFrame{
             error.addMessage("Please enter another email or log in", 130, 120, 0, 20);
         }
 
-        else if (!(passwordField.getText()).equals(confirmField.getText())){
+        else if (!(new String(passwordField.getPassword())).equals(new String(confirmField.getPassword()))){
             ErrorScreen error = new ErrorScreen();
             error.addMessage("The passwords you entered don't match", 50, 50, 1, 25);
-            error.addMessage("Please try again",220,120,0,20);
+            error.addMessage("Please try again", 220, 120, 0, 20);
         }
 
         else {
+            // Persist user to database
             authentication.register(nameField.getText(), emailField.getText(), new String(passwordField.getPassword()));
+
+            // Initialize session and transition
             int ID = user.getIdByEmail(emailField.getText());
             Regular_User regularUser = new Regular_User(ID, nameField.getText(), emailField.getText(), new String(passwordField.getPassword()));
             this.dispose();
@@ -111,6 +144,9 @@ public class SignupScreen extends JFrame{
         }
     }
 
+    /**
+     * Closes the signup screen and navigates to the {@link LoginScreen}.
+     */
     public void loginScreen(){
         this.dispose();
         LoginScreen loginScreen = new LoginScreen();

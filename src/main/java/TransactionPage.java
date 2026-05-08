@@ -4,12 +4,22 @@ import java.awt.*;
 import java.time.LocalDate;
 import java.util.ArrayList;
 
+/**
+ * Provides a modern graphical user interface for viewing and managing user transactions.
+ * * <p>The TransactionPage class serves as a comprehensive financial dashboard, displaying
+ * real-time statistics (Balance, Income, Expenses) and a detailed, scrollable history
+ * of the user's financial activities. It utilizes custom-painted components for a
+ * polished "app-like" aesthetic and integrates with {@link Transaction} and
+ * {@link Report} for data persistence and calculation.</p>
+
+ */
 public class TransactionPage extends JFrame {
 
     private Regular_User user;
     private Transaction transactionManager;
     private Report reportManager;
 
+    // UI Color Palette
     private final Color APP_WHITE      = new Color(255, 255, 255);
     private final Color SOFT_BG        = new Color(247, 249, 252);
     private final Color CARD_BORDER    = new Color(234, 238, 243);
@@ -18,6 +28,13 @@ public class TransactionPage extends JFrame {
     private final Color SOFT_RED       = new Color(255, 121, 121);
     private final Color TEXT_BLACK     = new Color(45, 52, 54);
 
+    /**
+     * Constructs the TransactionPage for a specific user.
+     * * <p>Initializes the layout, sets up the main container with a custom scroll pane,
+     * and triggers the creation of the header, statistics cards, and the
+     * transaction list.</p>
+     * * @param user The authenticated {@link Regular_User} whose data is being displayed.
+     */
     public TransactionPage(Regular_User user) {
         this.user = user;
         this.transactionManager = new Transaction();
@@ -42,6 +59,7 @@ public class TransactionPage extends JFrame {
 
         createStatsSection(body);
 
+        // Section Title
         JLabel listLabel = new JLabel("My Transactions");
         listLabel.setFont(new Font("Segoe UI", Font.BOLD, 30));
         listLabel.setForeground(TEXT_BLACK);
@@ -61,6 +79,7 @@ public class TransactionPage extends JFrame {
 
         body.add(listPanel);
 
+        // Custom scroll implementation for mobile-like feel
         JScrollPane scroll = new JScrollPane(body);
         scroll.setBorder(null);
         scroll.setOpaque(false);
@@ -68,12 +87,14 @@ public class TransactionPage extends JFrame {
         scroll.getVerticalScrollBar().setPreferredSize(new Dimension(0, 0));
         container.add(scroll, BorderLayout.CENTER);
 
-
-
-
         setVisible(true);
     }
 
+    /**
+     * Creates the top header section including a personalized welcome message
+     * and the "Add Transaction" button.
+     * * @param container The main parent panel where the header is added.
+     */
     private void createLightHeader(JPanel container) {
         JPanel header = new JPanel(new BorderLayout());
         header.setOpaque(false);
@@ -86,8 +107,8 @@ public class TransactionPage extends JFrame {
         JButton addBtn = new JButton("Add Transaction");
         styleAddBtn(addBtn);
         addBtn.addActionListener(e -> {
-
-            new AddTransactionPage(user);});
+            new AddTransactionPage(user);
+        });
 
         JPanel btnWrapper = new JPanel(new FlowLayout(FlowLayout.RIGHT));
         btnWrapper.setOpaque(false);
@@ -98,6 +119,10 @@ public class TransactionPage extends JFrame {
         container.add(header, BorderLayout.NORTH);
     }
 
+    /**
+     * Applies custom graphics rendering to a button to create a rounded gradient effect.
+     * * @param btn The JButton to be styled.
+     */
     private void styleAddBtn(JButton btn) {
         btn.setFocusPainted(false);
         btn.setBorderPainted(false);
@@ -121,9 +146,12 @@ public class TransactionPage extends JFrame {
         });
     }
 
-
-//  state for balance/income/expense
-
+    /**
+     * Calculates and displays the user's monthly financial summary in card format.
+     * * <p>Fetches data for the current month's balance, total income, and total expenses
+     * using the {@link Report} manager and renders them into the UI.</p>
+     * * @param body The panel where the statistic cards will be added.
+     */
     private void createStatsSection(JPanel body) {
         int uID = user.getUserId();
         LocalDate now = LocalDate.now();
@@ -161,6 +189,14 @@ public class TransactionPage extends JFrame {
         body.add(row);
     }
 
+    /**
+     * Creates a stylized UI card to display a specific financial metric.
+     * * @param label  The title of the card (e.g., "Income").
+     * @param value  The monetary value to display.
+     * @param accent The color associated with the card's theme.
+     * @param isBig  Whether the card should be rendered at full width or half width.
+     * @return A {@link JPanel} configured as a metric card.
+     */
     private JPanel createCard(String label, String value, Color accent, boolean isBig) {
         JPanel card = new JPanel(new BorderLayout());
         card.setBackground(APP_WHITE);
@@ -186,10 +222,15 @@ public class TransactionPage extends JFrame {
         return card;
     }
 
+    /**
+     * Queries the database for the user's transaction history and renders the items
+     * into the transaction list.
+     * * @param list The panel that will contain the transaction items.
+     */
     private void loadtransaction(JPanel list) {
         int uID = user.getUserId();
-        transactionManager.showTransaction(uID);
 
+        // Custom SQL to fetch latest transactions
         String sql = "SELECT TOP 100 * FROM Transactions WHERE User_ID = ? ORDER BY Date DESC";
         String[] p = {Integer.toString(uID)};
 
@@ -214,6 +255,14 @@ public class TransactionPage extends JFrame {
         list.repaint();
     }
 
+    /**
+     * Creates a horizontal list item representing a single transaction.
+     * * @param title The name of the transaction.
+     * @param type  The transaction type (Income/Expense).
+     * @param amt   The transaction amount.
+     * @param time  The date of the transaction.
+     * @return A {@link JPanel} configured as a transaction list item.
+     */
     private JPanel createTransactionItem(String title, String type, String amt, String time) {
         boolean isInc = type.equalsIgnoreCase("Income");
         JPanel item = new JPanel(new BorderLayout());

@@ -3,8 +3,16 @@ import javax.swing.border.EmptyBorder;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.time.LocalDate;
 
+
+/**
+ * AddTransactionPage is a Swing-based graphical interface used to record
+ * new financial transactions (Incomes or Expenses).
+ * * <p>The page handles user input validation, dynamic styling for modern UI/UX,
+ * and communicates with the {@link Regular_User} and {@link Transaction}
+ * logic to persist data to the database.</p>
+
+ */
 public class AddTransactionPage extends JFrame {
 
     private Regular_User user;
@@ -15,6 +23,7 @@ public class AddTransactionPage extends JFrame {
     private JComboBox<String> typeCombo;
     private JComboBox<String> catCombo;
 
+    // Modern UI Color Palette
     private final Color PRIMARY_BLUE   = new Color(30, 58, 138);
     private final Color HOVER_BLUE     = new Color(37, 99, 235);
     private final Color BG_COLOR       = new Color(248, 250, 252);
@@ -22,6 +31,11 @@ public class AddTransactionPage extends JFrame {
     private final Color TEXT_DARK      = new Color(15, 23, 42);
     private final Color TEXT_MUTED     = new Color(100, 116, 139);
 
+    /**
+     * Constructs the AddTransactionPage and initializes all UI components.
+     * * @param user The current authenticated user session required for
+     * linking the transaction and checking balances.
+     */
     public AddTransactionPage(Regular_User user) {
         this.user = user;
         this.transaction = new Transaction();
@@ -31,13 +45,13 @@ public class AddTransactionPage extends JFrame {
         setLocationRelativeTo(null);
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 
-
+        // Main background panel
         JPanel mainPanel = new JPanel(new BorderLayout());
         mainPanel.setBackground(BG_COLOR);
         mainPanel.setBorder(new EmptyBorder(40, 45, 40, 45));
         setContentPane(mainPanel);
 
-
+        // Central white card container
         JPanel card = new JPanel();
         card.setBackground(CARD_WHITE);
         card.setLayout(new BoxLayout(card, BoxLayout.Y_AXIS));
@@ -46,7 +60,7 @@ public class AddTransactionPage extends JFrame {
                 new EmptyBorder(35, 60, 35, 60)
         ));
 
-
+        // Header Section
         JLabel title = new JLabel("Add Transaction");
         title.setFont(new Font("Segoe UI", Font.BOLD, 28));
         title.setForeground(PRIMARY_BLUE);
@@ -60,16 +74,18 @@ public class AddTransactionPage extends JFrame {
         card.add(subtitle);
         card.add(Box.createRigidArea(new Dimension(0, 40)));
 
-
+        // Input Fields Initialization
         nameField = addModernInput(card, "Transaction Name", "Enter name...");
         amountField = addModernInput(card, "Amount ($)", "0.00");
 
+        // Transaction Type Dropdown
         addLabel(card, "Type");
         typeCombo = new JComboBox<>(transaction.getTransactionsType(user.getUserId()));
         styleDropdown(typeCombo);
         card.add(typeCombo);
         card.add(Box.createRigidArea(new Dimension(0, 30)));
 
+        // Category Selection
         addLabel(card, "Category");
         String[] categories = {"General", "Food", "Transport", "Rent", "Salary", "Entertainment"};
         catCombo = new JComboBox<>(categories);
@@ -79,6 +95,7 @@ public class AddTransactionPage extends JFrame {
         card.add(Box.createVerticalGlue());
         card.add(Box.createRigidArea(new Dimension(0, 30)));
 
+        // Footer Buttons (Cancel / Save)
         JPanel footer = new JPanel(new GridLayout(1, 2, 20, 0));
         footer.setOpaque(false);
         footer.setMaximumSize(new Dimension(500, 50));
@@ -92,9 +109,7 @@ public class AddTransactionPage extends JFrame {
 
         JButton saveBtn = new JButton("Save Transaction");
         stylePrimaryBtn(saveBtn);
-        saveBtn.addActionListener(e -> {
-            saveData();
-        });
+        saveBtn.addActionListener(e -> saveData());
 
         footer.add(backBtn);
         footer.add(saveBtn);
@@ -104,7 +119,12 @@ public class AddTransactionPage extends JFrame {
         setVisible(true);
     }
 
-
+    /**
+     * Gathers data from the form, validates input formats, and attempts to save
+     * the transaction through the {@link Regular_User#addTransaction} method.
+     * <p>Handles {@link NumberFormatException} for invalid amounts and generic
+     * exceptions for database or logic errors.</p>
+     */
     private void saveData() {
         try {
             String name = nameField.getText().trim();
@@ -125,6 +145,7 @@ public class AddTransactionPage extends JFrame {
 
             Category selectedCategory = new Category(categoryStr);
 
+            // Execute logic: Update balance and save to DB
             user.addTransaction(type, name, amount, selectedCategory);
 
             JOptionPane.showMessageDialog(this, "Transaction Saved Successfully! ✅");
@@ -140,6 +161,13 @@ public class AddTransactionPage extends JFrame {
         }
     }
 
+    /**
+     * Helper method to create a labeled text field with focus effects and custom borders.
+     * * @param parent The panel to which the components will be added.
+     * @param label  The text to display above the input field.
+     * @param hint   The placeholder text (hint) for the field.
+     * @return The initialized {@link JTextField} object.
+     */
     private JTextField addModernInput(JPanel parent, String label, String hint) {
         addLabel(parent, label);
         JTextField f = new JTextField();
@@ -170,6 +198,11 @@ public class AddTransactionPage extends JFrame {
         return f;
     }
 
+    /**
+     * Standardizes the look of section labels.
+     * * @param parent The panel to add the label to.
+     * @param text   The content of the label.
+     */
     private void addLabel(JPanel parent, String text) {
         JLabel l = new JLabel(text);
         l.setFont(new Font("Segoe UI Semibold", Font.PLAIN, 15));
@@ -179,6 +212,10 @@ public class AddTransactionPage extends JFrame {
         parent.add(l);
     }
 
+    /**
+     * Applies styling to JComboBox components for a modern look.
+     * * @param cb The JComboBox to style.
+     */
     private void styleDropdown(JComboBox<String> cb) {
         cb.setMaximumSize(new Dimension(500, 45));
         cb.setBackground(Color.WHITE);
@@ -190,6 +227,10 @@ public class AddTransactionPage extends JFrame {
         cb.setAlignmentX(Component.CENTER_ALIGNMENT);
     }
 
+    /**
+     * Styles the primary action button (Save) with hover effects.
+     * * @param b The button to style.
+     */
     private void stylePrimaryBtn(JButton b) {
         b.setBackground(PRIMARY_BLUE);
         b.setForeground(Color.WHITE);
@@ -203,6 +244,10 @@ public class AddTransactionPage extends JFrame {
         });
     }
 
+    /**
+     * Styles the secondary action button (Cancel) with an outlined look.
+     * * @param b The button to style.
+     */
     private void styleSecondaryBtn(JButton b) {
         b.setBackground(Color.WHITE);
         b.setForeground(PRIMARY_BLUE);
