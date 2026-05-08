@@ -39,12 +39,14 @@ public class Regular_User extends User {
             return;
         }
 
-        Transaction t;
+       // Transaction t;
         LocalDate now = LocalDate.now();
 
         if (type == TransactionType.INCOME) {
-            t = new income(amount);
+           income in = new income(amount);
             account.deposit(getUserId(), amount);
+            in.save(getUserId(), name , "Salary" , now , amount);
+            transactions.add(in);
         }
         else
         {
@@ -52,13 +54,15 @@ public class Regular_User extends User {
                 System.out.println("Not enough balance!");
                 return;
             }
-            t = new Expense(amount);
+            Expense expense = new Expense(amount);
             account.withdraw(getUserId(), amount);
+            expense.save(getUserId() , name , " " ,now ,amount , category);
+            transactions.add(expense);
         }
 
 
-        t.save(name, now, amount, category);
-        transactions.add(t); // not sure
+       // t.save(getUserId(),name, now, amount);
+        //transactions.add(t); // not sure
         System.out.println(" Transaction added: " + name + " | " + amount + " " + currency);
     }
 
