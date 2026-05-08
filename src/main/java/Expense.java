@@ -10,17 +10,15 @@
             this.expenseAmount = e;
         }
 
-        public void save( int userID ,String Name,String note,  LocalDate Date, double aAmount, Category category) {
-            this.notes = note;
+        public void save( int userID ,String Name, LocalDate Date, double aAmount, Category category) {
             this.expenseAmount += aAmount;
             this.balance -=aAmount;
             this.account = new Account(userID);
             account.withdraw(userID , aAmount);
             this.category = category;
-            String sql ="INSERT INTO Transactions (Name , Amount , User_ID , Type , Date , Category , Notes) VALUES (? , ?, ?, ? ,?, ? ,?) ";
-            String[] p = {Name , Double.toString(aAmount) , Integer.toString(userID), "Expense" , Date.toString() , category.getName(), note};
+            String sql ="INSERT INTO Transactions (Name , Amount , User_ID , Type , Date , Category ) VALUES (? , ?, ?, ? ,?, ? ) ";
+            String[] p = {Name , Double.toString(aAmount) , Integer.toString(userID), "Expense" , Date.toString() , category.getName()};
             db.updateQuery(sql , p);
-
         }
         @Override
         public void getTransactionByCategory(Category category){
