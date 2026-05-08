@@ -56,7 +56,7 @@ public class Regular_User extends User {
             }
             Expense expense = new Expense(amount);
             account.withdraw(getUserId(), amount);
-            expense.save(getUserId() , name , " " ,now ,amount , category);
+            expense.save(getUserId() , name  ,now ,amount , category);
             transactions.add(expense);
         }
 
