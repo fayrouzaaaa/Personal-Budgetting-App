@@ -8,22 +8,20 @@ public class Regular_User extends User {
     private final List<String> availableCurrencies =
             new ArrayList<>(List.of("EGP", "USD", "EUR", "SAR"));
 
-    private final List<Transaction> transactions = new ArrayList<>();  //not sure
+    private final List<Transaction> transactions = new ArrayList<>();
     private final Account account;
+
     public enum TransactionType {
         INCOME,
         EXPENSE
     }
+
     public Regular_User(int id, String name, String email, String password) {
         super(id, name, email, password);
         this.account = new Account(id);
     }
 
-    //  ADD TRANSACTION
-
     public void addTransaction(TransactionType type, String name, double amount, Category category) {
-
-
         if (amount <= 0) {
             System.out.println("Invalid amount!");
             return;
@@ -39,34 +37,26 @@ public class Regular_User extends User {
             return;
         }
 
-       // Transaction t;
         LocalDate now = LocalDate.now();
 
         if (type == TransactionType.INCOME) {
-           income in = new income(amount);
+            income in = new income(amount);
             account.deposit(getUserId(), amount);
-            in.save(getUserId(), name , "Salary" , now , amount);
+            in.save(getUserId(), name, now, amount, "Income", category.getName());
             transactions.add(in);
-        }
-        else
-        {
-            if (type == TransactionType.EXPENSE && amount > account.getBalance()) {
+        } else {
+            if (amount > account.getBalance()) {
                 System.out.println("Not enough balance!");
                 return;
             }
             Expense expense = new Expense(amount);
             account.withdraw(getUserId(), amount);
-            expense.save(getUserId() , name  ,now ,amount , category);
+            expense.save(getUserId(), name, now, amount, "Expense", category.getName());
             transactions.add(expense);
         }
 
-
-       // t.save(getUserId(),name, now, amount);
-        //transactions.add(t); // not sure
         System.out.println(" Transaction added: " + name + " | " + amount + " " + currency);
     }
-
-    // SET CURRENCY
 
     public void setCurrency(String newCurrency) {
         if (newCurrency == null) {
@@ -83,22 +73,16 @@ public class Regular_User extends User {
             System.out.println(" Currency not supported");
         }
     }
+
     public void setInitialBalance(double amount) {
         account.setInitialBalance(getUserId(), amount);
     }
 
-
-    //  GET BALANCE
     public double getBalance() {
         return account.getBalance();
     }
 
-    //GET CURRENCY
-    public String getCurrency() {return currency;}
-
-//    suggestion:
-//  in dashboard
-//    Balance: getBalance()
-//   Transactions count: "
-
+    public String getCurrency() {
+        return currency;
+    }
 }

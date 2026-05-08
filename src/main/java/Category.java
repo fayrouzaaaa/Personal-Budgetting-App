@@ -4,13 +4,19 @@ public class Category {
     private int categoryId;
     private String name;
     private boolean isDefault;
-    private Database db;  // non-static instance
+    private Database db;
+
+    public Category(String name) {
+        this.name = name;
+        this.isDefault = true;
+        this.db = new Database();
+    }
 
     public Category(int categoryId, String name, boolean isDefault) {
         this.categoryId = categoryId;
         this.name = name;
         this.isDefault = isDefault;
-        this.db = new Database();  // initialize database
+        this.db = new Database();
     }
 
     public int getCategoryId() {
@@ -29,14 +35,8 @@ public class Category {
         this.name = name;
     }
 
-    public void setCategory(String name) {
-        this.name = name;
-    }
-
-
-    // Database methods (non-static)
     public void saveToDatabase() {
-        String sql = "INSERT INTO Categories ( name, is_default) VALUES (?, ?)";
+        String sql = "INSERT INTO Categories (name, is_default) VALUES (?, ?)";
         String[] params = {
                 this.name,
                 String.valueOf(this.isDefault ? 1 : 0)
