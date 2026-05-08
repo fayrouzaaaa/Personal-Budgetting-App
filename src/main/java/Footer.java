@@ -38,7 +38,12 @@ public class Footer extends JPanel {
             DashboardScreen dashboardScreen = new DashboardScreen(user);
         }
     }
-    public void transactionsTab(){}
+    public void transactionsTab(){
+        if (!(current instanceof  TransactionPage)){
+            current.dispose();
+            TransactionPage transactionPage = new TransactionPage(user);
+        }
+    }
     public void budgetTab(){
         if (!(current instanceof BudgetScreen)){
             current.dispose();
