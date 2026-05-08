@@ -7,7 +7,7 @@ public class LoginScreen extends JFrame {
     private JTextField emailField;
     private JPasswordField passwordField;
     private Authentication authentication = new Authentication();
-    private Database db = new Database();
+    private User user = new User();
 
     LoginScreen(){
         this.setTitle("Welcome Back!");
@@ -78,11 +78,11 @@ public class LoginScreen extends JFrame {
         else {
             authentication.login(emailField.getText(), new String(passwordField.getPassword()));
             String email = emailField.getText();
-            ArrayList<String> fetch= db.selectQuery("SELECT ID FROM USERS WHERE EMAIL = ?", new String[] {email}, "ID");
-            fetch.addAll(db.selectQuery("SELECT NAME FROM USERS WHERE EMAIL = ?", new String[] {email}, "Name"));
-            Regular_User user = new Regular_User(Integer.valueOf(fetch.get(0)), fetch.get(1), emailField.getText(), new String(passwordField.getPassword()));
+            int ID = user.getIdByEmail(emailField.getText());
+            String name = user.getNameByEmail(emailField.getText());
+            Regular_User regularUser = new Regular_User(ID , name, emailField.getText(), new String(passwordField.getPassword()));
             this.dispose();
-            DashboardScreen dashboardScreen = new DashboardScreen(user);
+            DashboardScreen dashboardScreen = new DashboardScreen(regularUser);
         }
     }
 

@@ -6,7 +6,7 @@ import java.util.*;
 public class ReportScreen extends JFrame {
     private Regular_User user;
     private int userID;
-    private int current = Calendar.getInstance().get(Calendar.MONTH);
+    private int current;
     private String currentName;
     private Report report;
     private Footer footer;
@@ -23,6 +23,8 @@ public class ReportScreen extends JFrame {
 
         userID = user.getUserId();
         report = new Report();
+
+        current = Calendar.getInstance().get(Calendar.MONTH);
         String[] months = new DateFormatSymbols().getMonths();
         currentName = months[current];
         displayReport();

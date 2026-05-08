@@ -1,23 +1,37 @@
 import javax.swing.*;
 import java.awt.*;
+import java.text.DateFormatSymbols;
+import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Calendar;
 
 public class DashboardScreen extends JFrame{
-	private Database db = new Database();
+	//private Database db = new Database();
 	private Footer footer;
-	private String a[] ={};
 	private Regular_User user;
-	private String userID;
-	ArrayList<String> fetch = new ArrayList<>();
+	private int userID;
+	private int current;
+	private LocalDate startDate, endDate;
+	private Report report;
+	//ArrayList<String> fetch = new ArrayList<>();
 
 	DashboardScreen(Regular_User user){
 		this.user = user;
-		userID = String.valueOf(user.getUserId());
+		userID = user.getUserId();
 		this.setTitle("Home");
 		this.setSize(800,800);
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		this.setLayout(null);
 		this.setLocationRelativeTo(null);
+
+		current = Calendar.getInstance().get(Calendar.MONTH);
+		current ++;
+
+		startDate = LocalDate.of(2026 , current , 1);
+		int lastDay = startDate.lengthOfMonth();
+		endDate = LocalDate.of(2026, current, lastDay);
+
+		report = new Report();
 
 		JLabel hello = new JLabel("Hello, " + user.getName());
 		hello.setBounds(80,-60,700,300);
@@ -28,14 +42,14 @@ public class DashboardScreen extends JFrame{
 		this.add(footer);
 
 		showSummary();
-		showRecentTransactions();
+		//showRecentTransactions();
 		this.setVisible(true);
 	}
 
-	public void showSummary(){
+	public void showSummary() {
 		JPanel summary = new JPanel();
 		summary.setLayout(null);
-		summary.setBounds(100, 130, 540,200);
+		summary.setBounds(100, 130, 540, 200);
 		summary.setBackground(new Color(0x93A7F3));
 		this.add(summary);
 
@@ -45,7 +59,7 @@ public class DashboardScreen extends JFrame{
 		totalBalance.setForeground(Color.white);
 		summary.add(totalBalance);
 
-		JLabel balanceAmount = new JLabel (user.getCurrency()+ " " + user.getBalance());
+		JLabel balanceAmount = new JLabel(user.getCurrency() + " " + user.getBalance());
 		balanceAmount.setBounds(20, -70, 400, 300);
 		balanceAmount.setFont(new Font("SansSerif", Font.BOLD, 50));
 		balanceAmount.setForeground(Color.white);
@@ -57,16 +71,12 @@ public class DashboardScreen extends JFrame{
 		income.setForeground(Color.white);
 		summary.add(income);
 
-		fetch.addAll(db.selectQuery("Select SUM(Amount) as Sum From Transactions where Type='Income' And User_ID=?", new String[] {userID}, "Sum"));
-		if (fetch.get(0)==null){
-			fetch.set(0,"0.0");
-		}
-		JLabel incomeAmount = new JLabel(user.getCurrency() + " " + fetch.get(0));
+		String totalIncome = report.getTotalIncome(userID, startDate, endDate);
+		JLabel incomeAmount = new JLabel(user.getCurrency() + " " + totalIncome);
 		incomeAmount.setBounds(20, 20, 400, 300);
 		incomeAmount.setFont(new Font("SansSerif", Font.BOLD, 20));
 		incomeAmount.setForeground(Color.white);
 		summary.add(incomeAmount);
-		fetch.clear();
 
 		JLabel expense = new JLabel("Expense:");
 		expense.setBounds(400, 0, 400, 300);
@@ -74,55 +84,46 @@ public class DashboardScreen extends JFrame{
 		expense.setForeground(Color.white);
 		summary.add(expense);
 
-		fetch.addAll(db.selectQuery("Select SUM(Amount) as Sum From Transactions where Type='Expense' And User_ID= ?", new String[] {userID}, "Sum"));
-		if (fetch.get(0)==null){
-			fetch.set(0,"0.0");
-		}
-		JLabel expenseAmount = new JLabel(user.getCurrency() + " " + fetch.get(0));
+		String totalExpense = report.getTotalExpenses(userID, startDate, endDate);
+		JLabel expenseAmount = new JLabel(user.getCurrency() + " " + totalExpense);
 		expenseAmount.setBounds(400, 20, 400, 300);
 		expenseAmount.setFont(new Font("SansSerif", Font.BOLD, 20));
 		expenseAmount.setForeground(Color.white);
 		summary.add(expenseAmount);
-		fetch.clear();
 
 		JPanel transactionsSummary = new JPanel();
 		transactionsSummary.setLayout(null);
-		transactionsSummary.setBounds(100, 350, 160,100);
+		transactionsSummary.setBounds(100, 350, 160, 100);
 		transactionsSummary.setBackground(Color.white);
 		this.add(transactionsSummary);
 
-		JLabel transactions = new JLabel ("Transactions");
-		transactions.setBounds(20,0, 300, 50);
+		JLabel transactions = new JLabel("Transactions");
+		transactions.setBounds(20, 0, 300, 50);
 		transactions.setFont(new Font("SansSerif", Font.PLAIN, 20));
 		transactionsSummary.add(transactions);
 
-		fetch.addAll(db.selectQuery("Select Count(ID) AS SUM FROM TRANSACTIONS WHERE User_ID=?",
-				new String[] {userID}, "SUM"));
-		JLabel transactionCount = new JLabel (fetch.get(0));
+		String countTransactions = String.valueOf(report.getTransactionCount(userID));
+		JLabel transactionCount = new JLabel(countTransactions);
 		transactionCount.setBounds(65, 40, 300, 50);
 		transactionCount.setFont(new Font("SansSerif", Font.BOLD, 50));
 		transactionsSummary.add(transactionCount);
-		fetch.clear();
 
 		JPanel budgetSummary = new JPanel();
 		budgetSummary.setLayout(null);
-		budgetSummary.setBounds(290, 350, 160,100);
+		budgetSummary.setBounds(290, 350, 160, 100);
 		budgetSummary.setBackground(Color.white);
 		this.add(budgetSummary);
 
-		JLabel budgets = new JLabel ("Active Budgets");
-		budgets.setBounds(13,0, 300, 50);
+		JLabel budgets = new JLabel("Active Budgets");
+		budgets.setBounds(13, 0, 300, 50);
 		budgets.setFont(new Font("SansSerif", Font.PLAIN, 20));
 		budgetSummary.add(budgets);
 
-		fetch.addAll(db.selectQuery("Select Count(Budget_Items.id) AS SUM FROM Budget_Items, Budgets " +
-						"WHERE Budgets.user_id=? AND Budgets.budget_id=Budget_Items.budget_id",
-				new String[] {userID}, "SUM"));
-		JLabel activeBudgets = new JLabel (fetch.get(0));
+		String countBudgets = String.valueOf(report.getBudgetsCount(userID));
+		JLabel activeBudgets = new JLabel(countBudgets);
 		activeBudgets.setBounds(65, 40, 300, 50);
 		activeBudgets.setFont(new Font("SansSerif", Font.BOLD, 50));
 		budgetSummary.add(activeBudgets);
-		fetch.clear();
 
 		JPanel goalSummary = new JPanel();
 		goalSummary.setLayout(null);
@@ -130,25 +131,19 @@ public class DashboardScreen extends JFrame{
 		goalSummary.setBackground(Color.white);
 		this.add(goalSummary);
 
-		JLabel goals = new JLabel ("Goals");
-		goals.setBounds(50,0, 300, 50);
+		JLabel goals = new JLabel("Goals");
+		goals.setBounds(50, 0, 300, 50);
 		goals.setFont(new Font("SansSerif", Font.PLAIN, 20));
 		goalSummary.add(goals);
 
-		fetch.addAll(db.selectQuery("Select Count(goal_id) AS SUM FROM Goals where user_id = ?",
-				new String[] {userID}, "SUM"));
-		JLabel goalCount = new JLabel (fetch.get(0));
+		String countGoals = String.valueOf(report.getGoalsCount(userID));
+		JLabel goalCount = new JLabel(countGoals);
 		goalCount.setBounds(65, 40, 300, 50);
 		goalCount.setFont(new Font("SansSerif", Font.BOLD, 50));
 		goalSummary.add(goalCount);
-		fetch.clear();
-
-	}
-	public void updateSummary(){
-
 	}
 
-	public void showRecentTransactions(){
+	/*public void showRecentTransactions(){
 		JLabel recent = new JLabel("Recent Transactions");
 		recent.setBounds(100,340, 400, 300);
 		recent.setFont(new Font("SansSerif", Font.BOLD, 30));
@@ -208,9 +203,5 @@ public class DashboardScreen extends JFrame{
 			y += 60;
 		}
 		fetch.clear();
-	}
-
-	public void tabs(){
-
-	}
+	}*/
 }

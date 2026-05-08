@@ -1,9 +1,15 @@
+import java.util.ArrayList;
+
 public class Budget_Item {
     private double limitAmount;
     private double spentAmount;
     private Category category;
     private Budget budget;
     private Database db;  // non-static instance
+
+    public Budget_Item(){
+        this.db = new Database();
+    }
 
     public Budget_Item(Category category, double limitAmount) {
         this.category = category;
@@ -53,6 +59,33 @@ public class Budget_Item {
 
     public void limitRemaining() {
         System.out.println("Remaining limit: " + getRemaining());
+    }
+
+    public ArrayList<String> getItemCategory(int userID){
+        String sql = "select Categories.name as Name from Categories, Budget_Items,Budgets " +
+                "where Budgets.user_id=? AND Budgets.budget_id=Budget_Items.budget_id AND " +
+                "Categories.category_id=Budget_Items.category_id";
+        String[] p = {String.valueOf(userID)};
+        ArrayList<String> fetch = db.selectQuery(sql, p, "Name");
+
+        return fetch;
+    }
+
+    public ArrayList<String> getItemSpent(int userID){
+        String sql = "select spent_amount from Budget_Items, Budgets where Budgets.user_id = ? and Budgets.budget_id = Budget_Items.budget_id";
+        String[] p = {String.valueOf(userID)};
+        ArrayList<String> fetch = db.selectQuery(sql, p, "spent_amount");
+
+        return fetch;
+    }
+
+
+    public ArrayList<String> getItemLimit(int userID){
+        String sql = "select limit_amount from Budget_Items, Budgets where Budgets.user_id = ? and Budgets.budget_id = Budget_Items.budget_id";
+        String[] p = {String.valueOf(userID)};
+        ArrayList<String> fetch = db.selectQuery(sql, p, "limit_amount");
+
+        return fetch;
     }
 
     

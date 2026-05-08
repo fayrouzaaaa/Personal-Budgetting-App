@@ -5,16 +5,15 @@ import java.util.ArrayList;
 import java.util.Calendar;
 
 public class BudgetScreen extends JFrame {
-    Calendar calendar = Calendar.getInstance();
-    Regular_User user;
-    String totalBudget;
-    String totalSpent;
-    String totalRemaining;
-    private String month = new SimpleDateFormat("MMM").format(calendar.getTime());
-    private String year = new SimpleDateFormat("YYYY").format(calendar.getTime());
-    private Database db = new Database();
-    private String userID;
-    private ArrayList<String> fetch = new ArrayList<>();
+    private Calendar calendar = Calendar.getInstance();
+    private Regular_User user;
+    private String totalBudget;
+    private String totalSpent;
+    private Budget budget;
+    private Budget_Item item;
+    private String month;
+    private String year;
+    private int userID;
     private Footer footer;
 
     BudgetScreen(Regular_User user){
@@ -28,29 +27,15 @@ public class BudgetScreen extends JFrame {
         footer = new Footer(this, user );
         this.add(footer);
         this.user = user;
-        userID = String.valueOf(user.getUserId());
-        String sql = "SELECT SUM(limit_amount) as SUM from Budget_Items, Budgets " +
-                     "where Budgets.user_id = ? and Budgets.budget_id = Budget_Items.budget_id";
-        fetch.addAll(db.selectQuery(sql, new String[] {userID}, "SUM"));
+        userID = user.getUserId();
 
-        if (fetch.get(0)==null){
-            fetch.set(0, "0.0");
-        }
-        totalBudget = fetch.get(0);
+        month = new SimpleDateFormat("MMM").format(calendar.getTime());
+        year = new SimpleDateFormat("YYYY").format(calendar.getTime());
 
-        fetch.clear();
-
-        sql = "SELECT SUM(spent_amount) as SUM from Budget_Items, Budgets " +
-                "where Budgets.user_id = ? and Budgets.budget_id = Budget_Items.budget_id";
-
-        fetch.addAll(db.selectQuery(sql, new String[] {userID}, "SUM"));
-
-        if (fetch.get(0)==null){
-            fetch.set(0, "0.0");
-        }
-        totalSpent = fetch.get(0);
-
-        fetch.clear();
+        budget = new Budget();
+        item = new Budget_Item();
+        totalBudget = String.valueOf(budget.getBudgetSum(userID));
+        totalSpent = String.valueOf(budget.getSpentSum(userID));
 
         showBudgetSummary();
 
@@ -112,16 +97,12 @@ public class BudgetScreen extends JFrame {
         itemsPanel.setLayout(null);
         itemsPanel.setPreferredSize(new Dimension(530, 350));
 
-        String sql = "select Categories.name as Name from Categories, Budget_Items,Budgets " +
-                "where Budgets.user_id=? AND Budgets.budget_id=Budget_Items.budget_id AND " +
-                "Categories.category_id=Budget_Items.category_id";
-        ArrayList<String> itemNames = db.selectQuery(sql, new String[] {userID}, "Name");
+        ArrayList<String> itemNames = item.getItemCategory(userID);
 
-        sql = "select spent_amount from Budget_Items, dbo.Budgets where Budgets.user_id = ? and Budgets.budget_id = Budget_Items.budget_id";
-        ArrayList<String> itemSpent = db.selectQuery(sql, new String[] {userID}, "spent_amount");
+        ArrayList<String> itemSpent = item.getItemSpent(userID);
 
-        sql = "select limit_amount from Budget_Items, dbo.Budgets where Budgets.user_id = ? and Budgets.budget_id = Budget_Items.budget_id";
-        ArrayList<String> itemLimit = db.selectQuery(sql, new String[] {userID}, "limit_amount");
+        ArrayList<String> itemLimit = item.getItemLimit(userID);
+
         int yOfName= -120;
         int yOfBar = 50;
         for (int i=0; i<itemNames.size(); i++){

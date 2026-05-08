@@ -7,6 +7,8 @@ public class Budget {
     private List<Budget_Item> budgetItems;
     private Database db= new Database();  // non-static instance
 
+    public Budget(){}
+
     public Budget(int budgetId, String month , int userID) {
         this.budgetId = budgetId;
         this.month = month;
@@ -70,6 +72,24 @@ public class Budget {
             return item.isOverLimit();
         }
         return false;
+    }
+
+    public double getBudgetSum(int userID){
+        String sql = "SELECT SUM(limit_amount) as SUM from Budget_Items, Budgets " +
+                "where Budgets.user_id = ? and Budgets.budget_id = Budget_Items.budget_id";
+        String[] p = {String.valueOf(userID)};
+        ArrayList<String> fetch = db.selectQuery(sql, p, "SUM");
+
+        return Double.valueOf(fetch.get(0));
+    }
+
+    public double getSpentSum(int userID){
+        String sql = "SELECT SUM(spent_amount) as SUM from Budget_Items, Budgets " +
+                "where Budgets.user_id = ? and Budgets.budget_id = Budget_Items.budget_id";
+        String[] p = {String.valueOf(userID)};
+        ArrayList<String> fetch = db.selectQuery(sql, p, "SUM");
+
+        return Double.valueOf(fetch.get(0));
     }
 
 

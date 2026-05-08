@@ -24,6 +24,30 @@ public class Report {
 		 ArrayList<String> TotalExpense =db.selectQuery(sqlForTotalExpense ,pForTotalExpense , "TotalExpense");
 		 return TotalExpense.getFirst();
 	 }
+	public int getTransactionCount(int userID) {
+		String sql = "Select Count(ID) AS COUNT FROM TRANSACTIONS WHERE User_ID=?";
+		String[] p = {String.valueOf(userID)};
+		ArrayList<String> fetch = db.selectQuery(sql, p, "COUNT");
+
+		return Integer.valueOf(fetch.get(0));
+	}
+
+	public int getBudgetsCount(int userID){
+		String sql = "Select Count(Budget_Items.id) AS COUNT FROM Budget_Items, Budgets " +
+				"WHERE Budgets.user_id=? AND Budgets.budget_id=Budget_Items.budget_id";
+		String[] p = {String.valueOf(userID)};
+		ArrayList<String> fetch = db.selectQuery(sql, p, "COUNT");
+
+		return Integer.valueOf(fetch.get(0));
+	}
+
+	public int getGoalsCount(int userID){
+		String sql = "Select Count(goal_id) AS COUNT FROM Goals where user_id = ?";
+		String[] p = {String.valueOf(userID)};
+		ArrayList<String> fetch = db.selectQuery(sql, p, "COUNT");
+
+		return Integer.valueOf(fetch.get(0));
+	}
  	public ArrayList<String> generateReport(String m , int userID) {
 		 int month;
 		 if(m.length() <= 2){ //if user inputs a number instead of the name of the month

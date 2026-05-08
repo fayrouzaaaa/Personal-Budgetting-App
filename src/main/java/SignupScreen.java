@@ -9,7 +9,7 @@ public class SignupScreen extends JFrame{
     private JTextField emailField;
     private JPasswordField passwordField;
     private JPasswordField confirmField;
-    private Database db = new Database();
+    private User user = new User();
     private Authentication authentication = new Authentication();
 
     SignupScreen(){
@@ -104,10 +104,10 @@ public class SignupScreen extends JFrame{
 
         else {
             authentication.register(nameField.getText(), emailField.getText(), new String(passwordField.getPassword()));
-            ArrayList<String> fetch= db.selectQuery("SELECT ID FROM USERS WHERE EMAIL = ?", new String[] {emailField.getText()}, "ID");
-            Regular_User user = new Regular_User(Integer.valueOf(fetch.get(0)), nameField.getText(), emailField.getText(), new String(passwordField.getPassword()));
+            int ID = user.getIdByEmail(emailField.getText());
+            Regular_User regularUser = new Regular_User(ID, nameField.getText(), emailField.getText(), new String(passwordField.getPassword()));
             this.dispose();
-            DashboardScreen dashboardScreen = new DashboardScreen(user);
+            DashboardScreen dashboardScreen = new DashboardScreen(regularUser);
         }
     }
 
