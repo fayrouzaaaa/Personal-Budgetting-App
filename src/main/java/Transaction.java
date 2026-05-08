@@ -19,7 +19,7 @@ public class Transaction {
 
     public void getTransactionByDate( int userID,LocalDate aStart, LocalDate aEnd)
     {
-        String sql = "SELECT * FROM Transactions  WHERE Date BETWEEN ? AND ? AND Users.ID = ?"; // SQL query
+        String sql = "SELECT * FROM Transactions  WHERE Date BETWEEN ? AND ? AND User_ID = ?"; // SQL query
         String[] p ={ aStart.toString() , aEnd.toString(),Integer.toString(userID)}; // convert dates to string
         displayTransaction(sql , p);
 

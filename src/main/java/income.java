@@ -15,7 +15,7 @@ public class income extends Transaction {
         account.deposit(userID , aAmount);
         this.source = source;
         String sql ="INSERT INTO Transactions(Name, Amount , User_ID ,Type , Date , Category) VALUES (? , ?, ?, ? ,?, ?) ";
-        String[] p = {Name , Double.toString(aAmount) , Integer.toString(userID), "income" , Date.toString() ,source };
+        String[] p = {Name , Double.toString(aAmount) , Integer.toString(userID), "Income" , Date.toString() ,source };
         db.updateQuery(sql , p);
     }
     @Override
