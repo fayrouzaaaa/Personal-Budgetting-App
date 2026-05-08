@@ -6,14 +6,12 @@ import java.util.ArrayList;
 import java.util.Calendar;
 
 public class DashboardScreen extends JFrame{
-	//private Database db = new Database();
 	private Footer footer;
 	private Regular_User user;
 	private int userID;
 	private int current;
 	private LocalDate startDate, endDate;
 	private Report report;
-	//ArrayList<String> fetch = new ArrayList<>();
 
 	DashboardScreen(Regular_User user){
 		this.user = user;
@@ -143,13 +141,17 @@ public class DashboardScreen extends JFrame{
 		goalSummary.add(goalCount);
 	}
 
-	/*public void showRecentTransactions(){
+	public void showRecentTransactions(){
+
+		Database db = new Database();
+		ArrayList<String> fetch = new ArrayList<>();
+
 		JLabel recent = new JLabel("Recent Transactions");
 		recent.setBounds(100,340, 400, 300);
 		recent.setFont(new Font("SansSerif", Font.BOLD, 30));
 		this.add(recent);
 
-		fetch.addAll(db.selectQuery("select Name from Transactions where User_ID=? order by Date desc", new String[] {userID}, "Name"));
+		fetch.addAll(db.selectQuery("select Name from Transactions where User_ID=? order by Date desc", new String[] {String.valueOf(userID)}, "Name"));
 		int y = 390;
 		for (int i=0; i<fetch.size() && i<3; i++){
 			JLabel name = new JLabel(fetch.get(i));
@@ -160,7 +162,7 @@ public class DashboardScreen extends JFrame{
 		}
 		fetch.clear();
 
-		fetch.addAll(db.selectQuery("select Category from Transactions where User_ID=? order by Date desc", new String[] {userID}, "Category"));
+		fetch.addAll(db.selectQuery("select Category from Transactions where User_ID=? order by Date desc", new String[] {String.valueOf(userID)}, "Category"));
 		y = 420;
 		for (int i=0; i<fetch.size() && i<3; i++){
 			JLabel category = new JLabel(fetch.get(i));
@@ -171,7 +173,7 @@ public class DashboardScreen extends JFrame{
 		}
 		fetch.clear();
 
-		fetch.addAll(db.selectQuery("select Date from Transactions where User_ID=? order by Date desc", new String[] {userID}, "Date"));
+		fetch.addAll(db.selectQuery("select Date from Transactions where User_ID=? order by Date desc", new String[] {String.valueOf(userID)}, "Date"));
 		y = 420;
 		for (int i=0; i<fetch.size() && i<3; i++){
 			JLabel date = new JLabel(fetch.get(i));
@@ -181,8 +183,8 @@ public class DashboardScreen extends JFrame{
 			y += 60;
 		}
 		fetch.clear();
-		ArrayList<String> type = db.selectQuery("select Type from Transactions where User_ID=? order by Date desc", new String[] {userID}, "Type");
-		fetch.addAll(db.selectQuery("select Amount from Transactions where User_ID=? order by Date desc", new String[] {userID}, "Amount"));
+		ArrayList<String> type = db.selectQuery("select Type from Transactions where User_ID=? order by Date desc", new String[] {String.valueOf(userID)}, "Type");
+		fetch.addAll(db.selectQuery("select Amount from Transactions where User_ID=? order by Date desc", new String[] {String.valueOf(userID)}, "Amount"));
 		y = 420;
 		for (int i=0; i<fetch.size() && i<3; i++){
 			String symbol = "";
@@ -203,5 +205,5 @@ public class DashboardScreen extends JFrame{
 			y += 60;
 		}
 		fetch.clear();
-	}*/
+	}
 }
