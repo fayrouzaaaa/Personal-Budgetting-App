@@ -14,7 +14,7 @@ public class SignupScreen extends JFrame{
 
     SignupScreen(){
         this.setTitle("Welcome!");
-        setSize(415, 720);
+        setSize(800, 800);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setLayout(null);
         this.setLocationRelativeTo(null);
