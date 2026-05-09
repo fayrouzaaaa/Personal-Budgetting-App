@@ -42,7 +42,7 @@ public class TransactionPage extends JFrame {
         this.reportManager = new Report();
 
         setTitle("Transactions");
-        setSize(720, 1200);
+        this.setSize(800,800);
         setLocationRelativeTo(null);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setResizable(false);
@@ -56,8 +56,7 @@ public class TransactionPage extends JFrame {
         JPanel body = new JPanel();
         body.setLayout(new BoxLayout(body, BoxLayout.Y_AXIS));
         body.setOpaque(false);
-        body.setBorder(new EmptyBorder(10, 25, 30, 25));
-
+        body.setBorder(new EmptyBorder(10, 25, 20, 25));
         createStatsSection(body);
 
         // Section Title
@@ -79,18 +78,24 @@ public class TransactionPage extends JFrame {
         loadtransaction(listPanel);
 
         body.add(listPanel);
-
-        // Custom scroll implementation for mobile-like feel
+// Scroll Pane
         JScrollPane scroll = new JScrollPane(body);
         scroll.setBorder(null);
         scroll.setOpaque(false);
         scroll.getViewport().setOpaque(false);
         scroll.getVerticalScrollBar().setPreferredSize(new Dimension(0, 0));
+
+
         container.add(scroll, BorderLayout.CENTER);
 
+//      Footer
         footer = new Footer(this, user);
-        body.add(footer, BorderLayout.CENTER);
+        footer.setPreferredSize(new Dimension(720, 70));
 
+        JPanel footerWrapper = new JPanel(new BorderLayout());
+        footerWrapper.setBackground(APP_WHITE);
+        footerWrapper.add(footer, BorderLayout.CENTER);
+        container.add(footerWrapper, BorderLayout.SOUTH);
         setVisible(true);
     }
 
@@ -187,8 +192,8 @@ public class TransactionPage extends JFrame {
         row.setOpaque(false);
         row.setMaximumSize(new Dimension(480, 100));
 
-        row.add(createCard("Income", "+$" + String.format("%.2f", income), MINT_GREEN, false));
-        row.add(createCard("Expense", "-$" + String.format("%.2f", expense), SOFT_RED, false));
+        row.add(createCard("Income", "+EGP" + String.format("%.2f", income), MINT_GREEN, false));
+        row.add(createCard("Expense", "-EGP" + String.format("%.2f", expense), SOFT_RED, false));
 
         body.add(row);
     }
@@ -244,7 +249,7 @@ public class TransactionPage extends JFrame {
         ArrayList<String> dates = transactionManager.db.selectQuery(sql, p, "Date");
 
         if (names.isEmpty()) {
-            JLabel empty = new JLabel("No transactions found yet! 🏦");
+            JLabel empty = new JLabel("No transactions found yet! ");
             empty.setFont(new Font("Segoe UI", Font.ITALIC, 14));
             empty.setForeground(Color.GRAY);
             empty.setAlignmentX(Component.CENTER_ALIGNMENT);
@@ -287,7 +292,7 @@ public class TransactionPage extends JFrame {
         left.add(name);
         left.add(date);
 
-        JLabel price = new JLabel((isInc ? "+" : "-") + "$" + amt);
+        JLabel price = new JLabel((isInc ? "+" : "-") + "EGP" + amt);
         price.setForeground(isInc ? MINT_GREEN : SOFT_RED);
         price.setFont(new Font("Segoe UI Bold", Font.BOLD, 18));
 

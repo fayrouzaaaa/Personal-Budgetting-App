@@ -41,7 +41,7 @@ public class AddTransactionPage extends JFrame {
         this.transaction = new Transaction();
 
         setTitle("New Transaction");
-        setSize(720, 850);
+        setSize(800, 800);
         setLocationRelativeTo(null);
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 

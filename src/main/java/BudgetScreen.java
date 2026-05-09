@@ -157,6 +157,8 @@ public class BudgetScreen extends JFrame {
         // Add the items panel to a scroll pane to handle long lists
         JScrollPane scrollPane = new JScrollPane(itemsPanel);
         scrollPane.setBounds(100, 270, 540, 350);
+        scrollPane.getVerticalScrollBar().setPreferredSize(new Dimension(0, 0));
+
         this.add(scrollPane);
     }
 

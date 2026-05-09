@@ -15,5 +15,7 @@ public class Main {
     public static void main(String[] args) {
         // Initialize and display the first screen of the application
         SignupScreen s = new SignupScreen();
+
+
     }
 }

@@ -33,7 +33,7 @@ public class AddBudgetScreen extends JFrame {
      */
     AddBudgetScreen(Regular_User user){
         this.setTitle("Add Budget");
-        this.setSize(600,800);
+        this.setSize(800,800);
         this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         this.setLayout(null);
         this.setLocationRelativeTo(null);
