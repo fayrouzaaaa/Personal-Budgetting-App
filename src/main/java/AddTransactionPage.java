@@ -80,7 +80,7 @@ public class AddTransactionPage extends JFrame {
 
         // Transaction Type Dropdown
         addLabel(card, "Type");
-        typeCombo = new JComboBox<>(transaction.getTransactionsType(user.getUserId()));
+        typeCombo = new JComboBox<>(transaction.getTransactionsType());
         styleDropdown(typeCombo);
         card.add(typeCombo);
         card.add(Box.createRigidArea(new Dimension(0, 30)));
@@ -100,10 +100,10 @@ public class AddTransactionPage extends JFrame {
         footer.setOpaque(false);
         footer.setMaximumSize(new Dimension(500, 50));
 
-        JButton backBtn = new JButton("Cancel");
+        JButton backBtn = new JButton("Back To Home");
         styleSecondaryBtn(backBtn);
         backBtn.addActionListener(e -> {
-            new TransactionPage(user);
+            new DashboardScreen(user);
             dispose();
         });
 

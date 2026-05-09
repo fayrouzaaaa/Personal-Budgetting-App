@@ -146,9 +146,9 @@ public class Transaction {
      * * @param userID The unique ID of the user.
      * @return An array of strings containing unique transaction types.
      */
-    public String[] getTransactionsType(int userID) {
+    public String[] getTransactionsType() {
         String sql = "SELECT DISTINCT Type FROM Transactions WHERE User_ID = ?";
-        String[] p = {Integer.toString(userID)};
+        String[] p = {};
         ArrayList<String> result = db.selectQuery(sql, p, "Type");
         if (result.isEmpty()) {
             return new String[]{"Expense", "Income"};

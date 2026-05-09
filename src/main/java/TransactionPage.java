@@ -18,6 +18,7 @@ public class TransactionPage extends JFrame {
     private Regular_User user;
     private Transaction transactionManager;
     private Report reportManager;
+    private Footer footer;
 
     // UI Color Palette
     private final Color APP_WHITE      = new Color(255, 255, 255);
@@ -61,7 +62,7 @@ public class TransactionPage extends JFrame {
 
         // Section Title
         JLabel listLabel = new JLabel("My Transactions");
-        listLabel.setFont(new Font("Segoe UI", Font.BOLD, 30));
+        listLabel.setFont(new Font("Segoe UI", Font.BOLD, 20));
         listLabel.setForeground(TEXT_BLACK);
 
         JPanel titleWrapper = new JPanel(new FlowLayout(FlowLayout.LEFT, 0, 0));
