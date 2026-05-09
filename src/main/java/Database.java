@@ -53,6 +53,9 @@ public class Database {
             while (resultSet.next()) {
                 result.add(resultSet.getString(columnName));
             }
+
+            checkIfNull(result);
+
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -76,6 +79,20 @@ public class Database {
             query.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
+        }
+    }
+
+    /**
+     * Checks if any of the return values from the query is null and if so, replaces
+     * it with the value "0.0".
+     * * @param queryResult        The array list of results from some executed SQL query.
+     */
+
+    public void checkIfNull(ArrayList<String> queryResult){
+        for (int i=0; i<queryResult.size(); i++){
+            if (queryResult.get(i)==null){
+                queryResult.set(i, "0.0");
+            }
         }
     }
 }

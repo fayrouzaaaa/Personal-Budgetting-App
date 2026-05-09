@@ -34,7 +34,7 @@ public class SignupScreen extends JFrame{
 
         JLabel welcomeText = new JLabel("Welcome to Personal Budgeting App!");
         welcomeText.setBounds(120,0,700,300);
-        welcomeText.setFont(new Font("SansSerif", Font.BOLD, 30));
+        welcomeText.setFont(new Font("Segoe UI", Font.BOLD, 30));
         this.add(welcomeText);
 
         signUpGUI();
@@ -50,7 +50,7 @@ public class SignupScreen extends JFrame{
     public void signUpGUI(){
         JLabel enterName = new JLabel("Enter Name");
         enterName.setBounds(165, 50, 500, 300);
-        enterName.setFont(new Font("SansSerif", Font.PLAIN, 20));
+        enterName.setFont(new Font("Segoe UI", Font.PLAIN, 20));
         this.add(enterName);
 
         nameField = new JTextField();
@@ -59,7 +59,7 @@ public class SignupScreen extends JFrame{
 
         JLabel enterEmail= new JLabel("Enter Email");
         enterEmail.setBounds(165, 140, 500, 300);
-        enterEmail.setFont(new Font("SansSerif", Font.PLAIN, 20));
+        enterEmail.setFont(new Font("Segoe UI", Font.PLAIN, 20));
         this.add(enterEmail);
 
         emailField = new JTextField();
@@ -68,7 +68,7 @@ public class SignupScreen extends JFrame{
 
         JLabel enterPassword= new JLabel("Enter Password");
         enterPassword.setBounds(165, 230, 500, 300);
-        enterPassword.setFont(new Font("SansSerif", Font.PLAIN, 20));
+        enterPassword.setFont(new Font("Segoe UI", Font.PLAIN, 20));
         this.add(enterPassword);
 
         passwordField=  new JPasswordField();
@@ -77,7 +77,7 @@ public class SignupScreen extends JFrame{
 
         JLabel enterConfirm= new JLabel("Confirm Password");
         enterConfirm.setBounds(165, 320, 500, 300);
-        enterConfirm.setFont(new Font("SansSerif", Font.PLAIN, 20));
+        enterConfirm.setFont(new Font("Segoe UI", Font.PLAIN, 20));
         this.add(enterConfirm);
 
         confirmField = new JPasswordField();
@@ -90,7 +90,7 @@ public class SignupScreen extends JFrame{
 
         JLabel login = new JLabel("Already have an account?");
         login.setBounds(230, 480, 500, 300);
-        login.setFont(new Font("SansSerif", Font.ITALIC, 15));
+        login.setFont(new Font("Segoe UI", Font.ITALIC, 15));
         this.add(login);
 
         JButton loginButton = new JButton("Log In");

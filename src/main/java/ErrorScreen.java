@@ -46,7 +46,7 @@ public class ErrorScreen extends JFrame{
     public void addMessage(String m, int x, int y, int font, int size){
         JLabel message = new JLabel(m);
         message.setBounds(x, y, 500, 50);
-        message.setFont(new Font("SansSerif", font, size));
+        message.setFont(new Font("Segoe UI", font, size));
         this.add(message);
     }
 }

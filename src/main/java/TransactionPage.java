@@ -88,6 +88,9 @@ public class TransactionPage extends JFrame {
         scroll.getVerticalScrollBar().setPreferredSize(new Dimension(0, 0));
         container.add(scroll, BorderLayout.CENTER);
 
+        footer = new Footer(this, user);
+        body.add(footer, BorderLayout.CENTER);
+
         setVisible(true);
     }
 

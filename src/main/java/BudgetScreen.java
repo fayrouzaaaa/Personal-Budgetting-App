@@ -73,13 +73,13 @@ public class BudgetScreen extends JFrame {
 
         JLabel date = new JLabel(month + " " + year + " Total Budget");
         date.setBounds(20, -130, 400, 300);
-        date.setFont(new Font("SansSerif", Font.PLAIN, 20));
+        date.setFont(new Font("Segoe UI", Font.PLAIN, 20));
         date.setForeground(Color.white);
         budgetPanel.add(date);
 
         JLabel budgetAmount = new JLabel (user.getCurrency()+ " " + totalBudget);
         budgetAmount.setBounds(20, -80, 400, 300);
-        budgetAmount.setFont(new Font("SansSerif", Font.BOLD, 50));
+        budgetAmount.setFont(new Font("Segoe UI", Font.BOLD, 50));
         budgetAmount.setForeground(Color.white);
         budgetPanel.add(budgetAmount);
 
@@ -89,13 +89,13 @@ public class BudgetScreen extends JFrame {
 
         JLabel spent = new JLabel (user.getCurrency()+ " Spent: "+ totalSpent);
         spent.setBounds(20, -30, 400, 300);
-        spent.setFont(new Font("SansSerif", Font.PLAIN, 20));
+        spent.setFont(new Font("Segoe UI", Font.PLAIN, 20));
         spent.setForeground(Color.white);
         budgetPanel.add(spent);
 
         JLabel remain = new JLabel (user.getCurrency()+ " Spent: "+ String.valueOf(totalRemaining));
         remain.setBounds(350, -30, 400, 300);
-        remain.setFont(new Font("SansSerif", Font.PLAIN, 20));
+        remain.setFont(new Font("Segoe UI", Font.PLAIN, 20));
         remain.setForeground(Color.white);
         budgetPanel.add(remain);
 
@@ -132,12 +132,12 @@ public class BudgetScreen extends JFrame {
         for (int i = 0; i < itemNames.size(); i++){
             JLabel name = new JLabel (itemNames.get(i));
             name.setBounds(15, yOfName, 300, 300);
-            name.setFont(new Font ("SansSerif", Font.BOLD, 20));
+            name.setFont(new Font ("Segoe UI", Font.BOLD, 20));
             itemsPanel.add(name);
 
             JLabel progress = new JLabel(itemSpent.get(i) + " / " + itemLimit.get(i));
             progress.setBounds(390, yOfName, 300, 300);
-            progress.setFont(new Font("SansSerif",Font.PLAIN, 20 ));
+            progress.setFont(new Font("Segoe UI",Font.PLAIN, 20 ));
             itemsPanel.add(progress);
 
             yOfName += 90;
@@ -167,7 +167,7 @@ public class BudgetScreen extends JFrame {
         JButton addBudgetButton = new JButton("Create Budget");
         addBudgetButton.setBackground(new Color(0x93A7F3));
         addBudgetButton.setForeground(Color.white);
-        addBudgetButton.setFont(new Font("SansSerif", Font.BOLD, 20));
+        addBudgetButton.setFont(new Font("Segoe UI", Font.BOLD, 20));
         addBudgetButton.setBounds(500, 650, 200, 50);
         this.add(addBudgetButton);
         addBudgetButton.addActionListener(e -> addBudget());

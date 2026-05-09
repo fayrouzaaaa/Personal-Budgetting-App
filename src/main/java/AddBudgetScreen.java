@@ -61,7 +61,7 @@ public class AddBudgetScreen extends JFrame {
     public void showOptions(){
         JLabel category = new JLabel ("Budget Category");
         category.setBounds(100, 0, 300, 300);
-        category.setFont(new Font("SansSerif", Font.PLAIN, 15));
+        category.setFont(new Font("Segoe UI", Font.PLAIN, 15));
         this.add(category);
 
         categoryMenu = new JComboBox();
@@ -69,13 +69,13 @@ public class AddBudgetScreen extends JFrame {
             categoryMenu.addItem(categoryNames.get(i));
         }
         categoryMenu.setBounds(100, 165, 350, 40);
-        categoryMenu.setFont(new Font("SansSerif", Font.PLAIN, 20));
+        categoryMenu.setFont(new Font("Segoe UI", Font.PLAIN, 20));
         categoryMenu.setBackground(Color.white);
         this.add(categoryMenu);
 
         JLabel amount = new JLabel ("Budget Amount");
         amount.setBounds(100, 125, 300, 300);
-        amount.setFont(new Font("SansSerif", Font.PLAIN, 15));
+        amount.setFont(new Font("Segoe UI", Font.PLAIN, 15));
         this.add(amount);
 
         amountField = new JTextField();
@@ -98,7 +98,7 @@ public class AddBudgetScreen extends JFrame {
 
         JLabel month = new JLabel ("Budget Month");
         month.setBounds(100, 250, 300, 300);
-        month.setFont(new Font("SansSerif", Font.PLAIN, 15));
+        month.setFont(new Font("Segoe UI", Font.PLAIN, 15));
         this.add(month);
 
         monthMenu = new JComboBox();
@@ -106,7 +106,7 @@ public class AddBudgetScreen extends JFrame {
             monthMenu.addItem(monthNames.get(i));
         }
         monthMenu.setBounds(100, 420, 350, 40);
-        monthMenu.setFont(new Font("SansSerif", Font.PLAIN, 20));
+        monthMenu.setFont(new Font("Segoe UI", Font.PLAIN, 20));
         monthMenu.setBackground(Color.white);
         this.add(monthMenu);
 
@@ -114,7 +114,7 @@ public class AddBudgetScreen extends JFrame {
         create.setBounds(190, 550, 200, 50);
         create.setBackground(new Color(0x93A7F3));
         create.setForeground(Color.white);
-        create.setFont(new Font("SansSerif", Font.BOLD, 20));
+        create.setFont(new Font("Segoe UI", Font.BOLD, 20));
         create.addActionListener(e-> createBudget());
         this.add(create);
     }

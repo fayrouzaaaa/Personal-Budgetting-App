@@ -62,28 +62,28 @@ public class ReportScreen extends JFrame {
         // Header Label
         JLabel monthlyReport = new JLabel (currentName + " Report");
         monthlyReport.setBounds(100, -30, 300,300);
-        monthlyReport.setFont(new Font("SansSerif", Font.BOLD, 40));
+        monthlyReport.setFont(new Font("Segoe UI", Font.BOLD, 40));
         this.add(monthlyReport);
 
         // Descriptive static labels
         JLabel balance = new JLabel("Balance:");
         balance.setBounds(100, 50, 300, 300);
-        balance.setFont(new Font("SansSerif", Font.PLAIN, 20));
+        balance.setFont(new Font("Segoe UI", Font.PLAIN, 20));
         this.add(balance);
 
         JLabel income = new JLabel("Total Income:");
         income.setBounds(100, 150, 300, 300);
-        income.setFont(new Font("SansSerif", Font.PLAIN, 20));
+        income.setFont(new Font("Segoe UI", Font.PLAIN, 20));
         this.add(income);
 
         JLabel expense = new JLabel ("Total Expense:");
         expense.setBounds(100, 260, 300,300);
-        expense.setFont(new Font("SansSerif", Font.PLAIN, 20));
+        expense.setFont(new Font("Segoe UI", Font.PLAIN, 20));
         this.add(expense);
 
         JLabel savings = new JLabel("Savings:");
         savings.setBounds(100, 380, 300,300);
-        savings.setFont(new Font("SansSerif", Font.PLAIN, 20));
+        savings.setFont(new Font("Segoe UI", Font.PLAIN, 20));
         this.add(savings);
 
         // Dynamic value labels
@@ -91,7 +91,7 @@ public class ReportScreen extends JFrame {
         for (int i = 0; i < reportValues.size(); i++) {
             JLabel reportValue = new JLabel (reportValues.get(i));
             reportValue.setBounds(100, yOfLabels, 300, 300);
-            reportValue.setFont(new Font("SansSerif", Font.BOLD, 40));
+            reportValue.setFont(new Font("Segoe UI", Font.BOLD, 40));
             reportValue.setForeground(new Color(0x93A7F3)); // Theme color
 
             this.add(reportValue);

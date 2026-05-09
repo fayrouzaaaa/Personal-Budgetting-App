@@ -29,7 +29,7 @@ public class LoginScreen extends JFrame {
 
         JLabel welcomeText = new JLabel("Welcome Back to Personal Budgeting App!");
         welcomeText.setBounds(80,50,700,300);
-        welcomeText.setFont(new Font("SansSerif", Font.BOLD, 30));
+        welcomeText.setFont(new Font("Segoe UI", Font.BOLD, 30));
         this.add(welcomeText);
 
         loginGUI();
@@ -45,7 +45,7 @@ public class LoginScreen extends JFrame {
     public void loginGUI(){
         JLabel enterEmail = new JLabel("Enter Email");
         enterEmail.setBounds(165, 100, 500, 300);
-        enterEmail.setFont(new Font("SansSerif", Font.PLAIN, 20));
+        enterEmail.setFont(new Font("Segoe UI", Font.PLAIN, 20));
         this.add(enterEmail);
 
         emailField = new JTextField();
@@ -54,7 +54,7 @@ public class LoginScreen extends JFrame {
 
         JLabel enterPassword = new JLabel("Enter Password");
         enterPassword.setBounds(165, 190, 500, 300);
-        enterPassword.setFont(new Font("SansSerif", Font.PLAIN, 20));
+        enterPassword.setFont(new Font("Segoe UI", Font.PLAIN, 20));
         this.add(enterPassword);
 
         passwordField = new JPasswordField();
@@ -67,7 +67,7 @@ public class LoginScreen extends JFrame {
 
         JLabel signup = new JLabel("Don't have an account?");
         signup.setBounds(240, 360, 500, 300);
-        signup.setFont(new Font("SansSerif", Font.ITALIC, 15));
+        signup.setFont(new Font("Segoe UI", Font.ITALIC, 15));
         this.add(signup);
 
         JButton signupButton = new JButton("Sign Up");
