@@ -27,6 +27,9 @@ public class LoginScreen extends JFrame {
         this.setLayout(null);
         this.setLocationRelativeTo(null);
 
+        ImageIcon image = new ImageIcon("src/main/icon.png");
+        this.setIconImage(image.getImage());
+
         JLabel welcomeText = new JLabel("Welcome Back to Personal Budgeting App!");
         welcomeText.setBounds(80,50,700,300);
         welcomeText.setFont(new Font("Segoe UI", Font.BOLD, 30));

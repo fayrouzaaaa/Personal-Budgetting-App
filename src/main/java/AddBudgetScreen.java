@@ -4,7 +4,6 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.text.DateFormatSymbols;
 import java.util.*;
-import java.time.*;
 
 /**
  * AddBudgetScreen provides a graphical user interface for users to define
@@ -38,6 +37,9 @@ public class AddBudgetScreen extends JFrame {
         this.setLayout(null);
         this.setLocationRelativeTo(null);
         this.setVisible(true);
+
+        ImageIcon image = new ImageIcon("src/main/icon.png");
+        this.setIconImage(image.getImage());
 
         this.user =  user;
         userID = String.valueOf(user.getUserId());

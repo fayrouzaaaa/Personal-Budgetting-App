@@ -45,6 +45,9 @@ public class AddTransactionPage extends JFrame {
         setLocationRelativeTo(null);
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 
+        ImageIcon image = new ImageIcon("src/main/icon.png");
+        this.setIconImage(image.getImage());
+
         // Main background panel
         JPanel mainPanel = new JPanel(new BorderLayout());
         mainPanel.setBackground(BG_COLOR);
@@ -87,7 +90,7 @@ public class AddTransactionPage extends JFrame {
 
         // Category Selection
         addLabel(card, "Category");
-        String[] categories = {"General", "Food", "Transport", "Rent", "Salary", "Entertainment"};
+        String[] categories = {"Food", "Transportation", "Shopping", "Entertainment", "Bills", "Health", "Education", "Savings"};
         catCombo = new JComboBox<>(categories);
         styleDropdown(catCombo);
         card.add(catCombo);
@@ -100,10 +103,9 @@ public class AddTransactionPage extends JFrame {
         footer.setOpaque(false);
         footer.setMaximumSize(new Dimension(500, 50));
 
-        JButton backBtn = new JButton("Back To Home");
+        JButton backBtn = new JButton("Back");
         styleSecondaryBtn(backBtn);
         backBtn.addActionListener(e -> {
-            new DashboardScreen(user);
             dispose();
         });
 
@@ -150,7 +152,6 @@ public class AddTransactionPage extends JFrame {
 
             JOptionPane.showMessageDialog(this, "Transaction Saved Successfully! ✅");
 
-            new TransactionPage(user);
             dispose();
 
         } catch (NumberFormatException ex) {

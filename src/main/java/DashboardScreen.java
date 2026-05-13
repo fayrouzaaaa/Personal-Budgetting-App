@@ -1,6 +1,5 @@
 import javax.swing.*;
 import java.awt.*;
-import java.text.DateFormatSymbols;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -34,6 +33,9 @@ public class DashboardScreen extends JFrame{
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setLayout(null);
         this.setLocationRelativeTo(null);
+
+        ImageIcon image = new ImageIcon("src/main/icon.png");
+        this.setIconImage(image.getImage());
 
         // Determine current month and year for reporting
         current = Calendar.getInstance().get(Calendar.MONTH);

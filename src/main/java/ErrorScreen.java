@@ -24,6 +24,9 @@ public class ErrorScreen extends JFrame{
         this.setLayout(null);
         this.setLocationRelativeTo(null);
 
+        ImageIcon image = new ImageIcon("src/main/icon.png");
+        this.setIconImage(image.getImage());
+
         // Standard OK button to close the dialog
         JButton ok = new JButton ("OK");
         ok.setBounds(250, 200, 90, 30);

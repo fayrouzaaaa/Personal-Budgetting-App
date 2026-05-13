@@ -47,6 +47,9 @@ public class TransactionPage extends JFrame {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setResizable(false);
 
+        ImageIcon icon = new ImageIcon("src/main/icon.png");
+        this.setIconImage(icon.getImage());
+
         JPanel container = new JPanel(new BorderLayout());
         container.setBackground(SOFT_BG);
         setContentPane(container);

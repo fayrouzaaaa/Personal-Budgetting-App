@@ -1,7 +1,5 @@
 import javax.swing.*;
 import java.awt.*;
-import java.util.ArrayList;
-import java.util.Arrays;
 
 /**
  * Provides the graphical user interface for new user registration.
@@ -31,6 +29,9 @@ public class SignupScreen extends JFrame{
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setLayout(null);
         this.setLocationRelativeTo(null);
+
+        ImageIcon image = new ImageIcon("src/main/icon.png");
+        this.setIconImage(image.getImage());
 
         JLabel welcomeText = new JLabel("Welcome to Personal Budgeting App!");
         welcomeText.setBounds(120,0,700,300);

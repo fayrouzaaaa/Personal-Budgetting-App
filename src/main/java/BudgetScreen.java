@@ -37,6 +37,9 @@ public class BudgetScreen extends JFrame {
         this.setLocationRelativeTo(null);
         this.setVisible(true);
 
+        ImageIcon image = new ImageIcon("src/main/icon.png");
+        this.setIconImage(image.getImage());
+
         footer = new Footer(this, user );
         this.add(footer);
         this.user = user;

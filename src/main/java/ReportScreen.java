@@ -33,6 +33,9 @@ public class ReportScreen extends JFrame {
         this.setLocationRelativeTo(null);
         this.setVisible(true);
 
+        ImageIcon image = new ImageIcon("src/main/icon.png");
+        this.setIconImage(image.getImage());
+
         // Navigation footer initialization
         footer = new Footer(this, user);
         this.add(footer);
